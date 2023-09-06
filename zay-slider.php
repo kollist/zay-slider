@@ -129,7 +129,7 @@ if( ! class_exists( 'ZAY_Slider' ) ){
             $default_image_id = get_option("zayslider_default_image");
             wp_delete_post($default_image_id, true);
             delete_option("zayslider_default_image");
-            $menus = new WP_Query(array(
+            $menus = get_posts(array(
                 'post_type' => 'zay-slider-menu',
                 'number_posts' => -1,
                 'post_status'=> 'any'
