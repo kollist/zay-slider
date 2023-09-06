@@ -1,0 +1,276 @@
+.mce-statusbar.mce-container.mce-panel.mce-stack-layout-item.mce-last {
+    display: none;
+    }
+    .dialogMenuItem .mce-edit-area.mce-container.mce-panel.mce-stack-layout-item {
+        height: 250px ;
+    }
+    .dialogMenuItem{
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, .5);
+        z-index: 100000;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        overflow-y: scroll;
+    }
+    .dialog{
+        height: fit-content;
+        position: absolute;
+        top: 20px;
+        background-color: white;
+        padding: 20px;
+        width: 50%;
+    }
+    .modal-header {
+        display: flex;
+        border-bottom: 1px solid black;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.2em;
+    }
+    .modal-button, 
+    .rmvPrice {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
+    .erm_menu_item .edit-image { width: 150px; vertical-align: top; }
+    .erm_menu_item .edit-image img { width: 100%; height: auto; }
+    .erm_menu_item.section .edit-image { display: none !important; }
+    .modal-dialog { margin-top: 60px !important; }
+    .modal-body .edit-image { width: 150px; vertical-align: top;  }
+    .modal-body .edit-image img { width: 100%; height: 100%; object-fit: cover }
+    .modal-body .uploader-upload >div { width: 100%; height: 150px; border: 1px dashed #8c8c8c; text-align: center; }
+    .modal-body .uploader-upload button { margin-top: 60px; }
+    .modal-body .uploader-image { position: relative; width: 150px; height: 150px; }
+    .modal-body .uploader-image .icon-delete {
+        position: absolute;  top: 0px;  right: 0px;
+        width: 20px; height: 20px;
+        text-align: center; line-height: 20px;
+        background: rgba(255,255,255,0.6);
+        color: black;
+        cursor: pointer;
+        border: none;
+        
+    }
+    .modal-body .uploader-image .icon-delete:hover {
+        background: white;
+        color: #ff4c60;
+    }
+    .modal-body .row {
+        display: flex;
+        padding-top: 10px ;
+        justify-content: space-between;
+    }
+    .form-container {
+        width: calc(95% - 150px);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group input{
+        width: 100%;
+    }
+
+    .form-group:nth-child(2) {
+        padding: 20px 0;
+        width: 100%;
+    }
+    .form-group:last-child input {
+        width: 45%;
+    }
+    .modal-footer {
+        padding-top: 20px;
+        border-top: 1px black solid;
+        margin-top: 20px;
+        direction: rtl;
+    }
+    .modal-footer button:last-of-type{
+        margin-right: 10px 
+    }
+    
+    .edit-price {
+        margin: 10px 0;
+    }
+    .hide {
+        visibility: hidden;
+    }
+    
+    #my_custom_editor_ifr {
+        height: 100% !important;
+    }
+
+    
+    #errorMessage.errorMessage {
+        color: #a00;
+    }
+
+    .errorMessage.hide {
+        display: none;
+    }
+
+    .item-price {
+        display: none;
+    }
+    
+    #sortable { 
+        list-style-position: inside;
+        width: 90%;
+        max-width: 100%;
+        background: white;
+        padding: 0;
+        margin: 10px 0 10px 10px;
+        border-radius: 0.1rem;
+    }
+    .custom-cursor {
+        cursor: grab;
+    }
+
+    #sortable > span {
+        position: absolute;
+        right: 0;
+        /* top: 0; */
+    }
+
+    #sortable li { 
+        padding: 0 0 0 1rem;
+        box-shadow: 0.25rem 0.25rem 0.75rem rgb(0 0 0 / 0.15);
+        border-left: 4px solid #2271b1;
+        border-radius: 5px;
+        background-color: #2271b112;
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        align-items: center;
+        margin-bottom: 1em;
+    }
+    .show-data {
+        display: flex;
+        align-items: center;
+        /* padding: 10px; */
+    }
+    
+    .show-data img {
+        height: 100%;
+        border-radius: 5px;
+        box-shadow: 0.25rem 0.25rem 3rem rgb(0 0 0 / 0.15);
+    }
+    .show-data .item-info .item-show-title {
+        margin-left: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .show-data .item-info p {
+        margin-left: 16px;
+    }
+    
+    .action-data {
+        padding: 10px 20px;
+        display: flex;
+    }
+    .action-data button span {
+        font-size: 2rem;
+    }
+    .action-data .deleteIcon:hover {
+        color: #a00;
+        cursor: pointer;
+    }
+    .action-data .editIcon:hover {
+        color: #2271b1;
+        cursor: pointer;
+    }
+    .action-data button{
+        color: black;
+        padding: 0 2em;
+        text-decoration: none;
+        height: 40px;
+        width: 40px;
+        background-color: transparent;
+        border: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    .delete-dialog {
+        position: fixed;
+        background-color: white;
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 20% 45% 35%;
+        width: 500px !important;
+        height: 190px !important;
+        top: 30px;
+        border-radius: 5px;
+    }
+    
+    .ui-dialog-titlebar-close {
+        display: none;
+    }
+
+    .delete-dialog .deleteBtn {
+        display: flex;
+        justify-content: flex-end;
+    }
+    
+    .delete-dialog #closeDeleteDialogBtn {
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        margin: 5px 5px 0 0;
+        width: auto;
+    }
+    .delete-dialog #closeDeleteDialogBtn:hover {
+        color: red;
+    }
+
+    .delete-dialog .dialogBtns {
+        display: flex;
+        justify-content: flex-end;
+        padding: 20px;
+    }
+    .delete-dialog .dialogBtns button {
+        margin-right: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+    }
+    .delete-dialog .dialogBtns button:last-of-type {
+        background-color: #a00;
+        border-color: #a00;
+        margin-right: 0;
+    }
+    .delete-dialog .message {
+        display: flex;
+        justify-content: center;
+        padding-top: 5%;
+    }
+
+    .delete-dialog .message p {
+        font-size: 1.5em;
+        font-weight: bolder;
+    }
+
+
+
+
+    .ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front{
+        width: 98.9vw !important;
+        height: 100vh !important;
+        overflow: hidden !important;
+        background-color: rgba(0, 0, 0, .2);
+        z-index: 1000000;
+        display: flex;
+        justify-content: center;
+        position:fixed;
+    }
+
+    @media screen and (max-width: 900px) {
+        .dialog {
+            width: 90%;
+        }
+    }

@@ -1,0 +1,265 @@
+# Blank WordPress Pot
+# Copyright 2014 ...
+# This file is distributed under the GNU General Public License v3 or later.
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ZAY "
+"Slider v1.0.0\n"
+"Report-Msgid-Bugs-To: "
+"Translator Name "
+"<translations@example."
+"com>\n"
+"POT-Creation-Date: "
+"2023-09-05 18:03+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Your "
+"Name <you@example.com>\n"
+"Language-Team: Your Team "
+"<translations@example."
+"com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/"
+"plain; charset=UTF-8\n"
+"Content-Transfer-"
+"Encoding: 8bit\n"
+"Plural-Forms: "
+"nplurals=2; plural=n != "
+"1;\n"
+"X-Textdomain-Support: "
+"yesX-Generator: Poedit "
+"1.6.4\n"
+"X-Poedit-SourceCharset: "
+"UTF-8\n"
+"X-Poedit-KeywordsList: "
+"__;_e;esc_html_e;"
+"esc_html_x:1,2c;"
+"esc_html__;esc_attr_e;"
+"esc_attr_x:1,2c;"
+"esc_attr__;_ex:1,2c;"
+"_nx:4c,1,2;"
+"_nx_noop:4c,1,2;_x:1,2c;"
+"_n:1,2;_n_noop:1,2;"
+"__ngettext:1,2;"
+"__ngettext_noop:1,2;_c,"
+"_nc:4c,1,2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Generator: Poedit "
+"3.3.2\n"
+"X-Poedit-"
+"SearchPath-0: .\n"
+
+#: class.zay-slider-settings.php:19
+msgid "How does it work?"
+msgstr ""
+
+#: class.zay-slider-settings.php:25
+msgid "Shortcode"
+msgstr ""
+
+#: class.zay-slider-settings.php:32
+msgid ""
+"Other Plugin Settings"
+msgstr ""
+
+#: class.zay-slider-settings.php:38
+msgid ""
+"Number Of Slides To Show"
+msgstr ""
+
+#: class.zay-slider-settings.php:48
+msgid "Display Bullets"
+msgstr ""
+
+#: class.zay-slider-settings.php:142
+msgid ""
+"Wheter to display "
+"bullets or not"
+msgstr ""
+
+#: class.zay-slider-settings.php:148
+msgid ""
+"Use The given Shortcode "
+"In custom post type "
+"table [zay_slider "
+"id=\"givenID\" ] to "
+"display the slider in "
+"any page/post/widget"
+msgstr ""
+
+#: class.zay-slider-settings.php:159
+msgid ""
+"The Slides Number Field "
+"Can Be Nothing Else "
+"Except Integer"
+msgstr ""
+
+#: post-types/class.zay-slider-cpt.php:29
+msgid "Settings"
+msgstr ""
+
+#: post-types/class.zay-slider-cpt.php:38
+msgid ""
+"Something Went Wrong"
+msgstr ""
+
+#: post-types/class.zay-slider-cpt.php:53
+msgid ""
+"Order updated succefully"
+msgstr ""
+
+#: post-types/class.zay-slider-cpt.php:62
+#: post-types/class.zay-slider-cpt.php:65
+msgid "Food Menu Slider"
+msgstr ""
+
+#: post-types/class.zay-slider-cpt.php:63
+msgid "Food Menu Sliders"
+msgstr ""
+
+#: post-types/class.zay-slider-cpt.php:66
+#: post-types/class.zay-slider-cpt.php:67
+#: zay-slider.php:142
+#: zay-slider.php:143
+msgid "Add New Menu"
+msgstr ""
+
+#: post-types/class.zay-slider-cpt.php:79
+#: post-types/class.zay-slider-cpt.php:82
+msgid "Item Slider"
+msgstr ""
+
+#: post-types/class.zay-slider-cpt.php:80
+msgid "Item Sliders"
+msgstr ""
+
+#: post-types/class.zay-slider-cpt.php:83
+#: post-types/class.zay-slider-cpt.php:84
+#: views/zay-slider-food-metabox.php:105
+msgid "Add New Item"
+msgstr ""
+
+#: post-types/class.zay-slider-cpt.php:100
+msgid "Image"
+msgstr ""
+
+#: post-types/class.zay-slider-cpt.php:129
+msgid "ShortCode"
+msgstr ""
+
+#: post-types/class.zay-slider-cpt.php:155
+msgid ""
+"Add Items To Your Menu"
+msgstr ""
+
+#: post-types/class.zay-slider-cpt.php:163
+msgid "Add Item Price"
+msgstr ""
+
+#: post-types/class.zay-slider-cpt.php:217
+#: post-types/class.zay-slider-cpt.php:235
+#: post-types/class.zay-slider-cpt.php:260
+msgid ""
+"Something Wrong Happened"
+msgstr ""
+
+#: post-types/class.zay-slider-cpt.php:250
+msgid ""
+"Post Have Been Updated "
+"Succefully"
+msgstr ""
+
+#: post-types/class.zay-slider-cpt.php:336
+#: views/zay-slider-food-metabox.php:144
+#: views/zay-slider-food-metabox.php:147
+msgid "Price"
+msgstr ""
+
+#: post-types/class.zay-slider-cpt.php:339
+#: views/zay-slider-food-metabox.php:148
+msgid "Title"
+msgstr ""
+
+#: post-types/class.zay-slider-cpt.php:343
+msgid "PARENT ID: "
+msgstr ""
+
+#: views/settings-page.php:8
+msgid "Main Options"
+msgstr ""
+
+#: views/settings-page.php:11
+msgid "Additional Options"
+msgstr ""
+
+#: views/settings-page.php:23
+msgid "Save Settings"
+msgstr ""
+
+#: views/zay-slider-food-metabox.php:2
+msgid ""
+"Your Item Description "
+"Goes Here"
+msgstr ""
+
+#: views/zay-slider-food-metabox.php:42
+#: views/zay-slider-food-metabox.php:161
+msgid "Cancel"
+msgstr ""
+
+#: views/zay-slider-food-metabox.php:45
+msgid "Delete"
+msgstr ""
+
+#: views/zay-slider-food-metabox.php:112
+msgid "Menu item"
+msgstr ""
+
+#: views/zay-slider-food-metabox.php:122
+msgid "Select Image"
+msgstr ""
+
+#: views/zay-slider-food-metabox.php:134
+msgctxt "modal window"
+msgid "Title"
+msgstr ""
+
+#: views/zay-slider-food-metabox.php:135
+msgid "Item Title"
+msgstr ""
+
+#: views/zay-slider-food-metabox.php:138
+msgctxt "modal window"
+msgid "Description"
+msgstr ""
+
+#: views/zay-slider-food-metabox.php:152
+msgid "Add price"
+msgstr ""
+
+#: views/zay-slider-food-metabox.php:162
+msgid "Save"
+msgstr ""
+
+#: views/zay-slider-food-metabox.php:163
+msgid "Edit"
+msgstr ""
+
+#: zay-slider.php:132
+msgid "Zay Slider Options"
+msgstr ""
+
+#: zay-slider.php:152
+#: zay-slider.php:153
+msgid "All Slide Menus"
+msgstr ""
+
+#: zay-slider.php:162
+#: zay-slider.php:163
+msgid "All Menus Food"
+msgstr ""
+
+#: zay-slider.php:177
+msgid "Settings Saved"
+msgstr ""
