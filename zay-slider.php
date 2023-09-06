@@ -120,12 +120,23 @@ if( ! class_exists( 'ZAY_Slider' ) ){
         }
 
         public static function deactivate(){
+            unregister_post_type( 'zay-slider-menu' );
+            unregister_post_type( 'zay-slider-item' );
             flush_rewrite_rules();
-            unregister_post_type( 'zay-slider' );
         }
-
+        
         public static function uninstall(){
-
+            $default_image_id = get_option("zayslider_default_image");
+            wp_delete_post($default_image_id, true);
+            delete_option("zayslider_default_image");
+            $menus = new WP_Query(array(
+                'post_type' => 'zay-slider-menu',
+                'number_posts' => -1,
+                'post_status'=> 'any'
+            ));
+            foreach($menus as $menu) {
+                wp_delete_post($menu->ID, true);
+            }
         }
         public function add_menu() {
             add_menu_page(
@@ -173,11 +184,11 @@ if( ! class_exists( 'ZAY_Slider' ) ){
                 return;
             }
 
-            if( isset( $_GET['settings-updated'] ) ){
-                add_settings_error( 'zay_slider_options', 'zay_slider_message', esc_html__( 'Settings Saved', 'zay-slider' ), 'success' );
-            }
+            // if( isset( $_GET['settings-updated'] ) ){
+            //     add_settings_error( 'zay_slider_options', 'zay_slider_message', esc_html__( 'Settings Saved', 'zay-slider' ), 'success' );
+            // }
             
-            settings_errors( 'zay_slider_options' );
+            // settings_errors( 'zay_slider_options' );
 
             require( ZAY_SLIDER_PATH . 'views/settings-page.php' );
         }
