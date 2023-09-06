@@ -122,6 +122,8 @@ if( ! class_exists( 'ZAY_Slider' ) ){
         public static function deactivate(){
             unregister_post_type( 'zay-slider-menu' );
             unregister_post_type( 'zay-slider-item' );
+            $default_image_id = get_option("zayslider_default_image");
+            wp_delete_post($default_image_id, true);
             flush_rewrite_rules();
         }
         
@@ -134,6 +136,16 @@ if( ! class_exists( 'ZAY_Slider' ) ){
                 'number_posts' => -1,
                 'post_status'=> 'any'
             ));
+            $items = get_posts(array(
+                'post_type' => 'zay-slider-item',
+                'number_posts' => -1,
+                'post_status'=> 'any'
+            ));
+            
+            foreach($items as $item) {
+                wp_delete_post($item->ID, true);
+            }
+
             foreach($menus as $menu) {
                 wp_delete_post($menu->ID, true);
             }
