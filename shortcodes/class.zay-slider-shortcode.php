@@ -21,7 +21,7 @@ if ( ! class_exists('Zay_Slider_Shortcode') ){
             if( !empty( $id ) ){
                 $id = array_map( 'absint', explode( ',', $id ) );
             }else {
-                return 'ID is required!!';
+                return '<div class="notice-error">ID is required!!</div>';
             }
             ob_start();
             require( ZAY_SLIDER_PATH . 'views/zay-slider_shortcode.php');

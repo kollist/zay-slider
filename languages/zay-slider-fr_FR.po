@@ -74,17 +74,17 @@ msgstr "Commande mise à jour avec succès"
 
 #: post-types/class.zay-slider-cpt.php:62
 #: post-types/class.zay-slider-cpt.php:65
-msgid "Food Menu Slider"
-msgstr "Curseur de menu alimentaire"
+msgid "Slider"
+msgstr "Curseur"
 
 #: post-types/class.zay-slider-cpt.php:63
-msgid "Food Menu Sliders"
-msgstr "Curseurs de menu alimentaire"
+msgid "Sliders"
+msgstr "Curseurs"
 
 #: post-types/class.zay-slider-cpt.php:66
 #: post-types/class.zay-slider-cpt.php:67 zay-slider.php:142 zay-slider.php:143
-msgid "Add New Menu"
-msgstr "Ajouter un nouveau menu"
+msgid "Add New Slider"
+msgstr "Ajouter une nouvelle curseur"
 
 #: post-types/class.zay-slider-cpt.php:79
 #: post-types/class.zay-slider-cpt.php:82
@@ -109,8 +109,8 @@ msgid "ShortCode"
 msgstr "ShortCode"
 
 #: post-types/class.zay-slider-cpt.php:155
-msgid "Add Items To Your Menu"
-msgstr "Ajoutez des éléments à votre menu"
+msgid "Add Items To Your Slider"
+msgstr "Ajoutez des éléments à votre Curseur "
 
 #: post-types/class.zay-slider-cpt.php:163
 msgid "Add Item Price"
@@ -165,8 +165,8 @@ msgid "Delete"
 msgstr "Supprimer"
 
 #: views/zay-slider-food-metabox.php:112
-msgid "Menu item"
-msgstr "Élément du menu"
+msgid "Slider item"
+msgstr "Curseur d’élément"
 
 #: views/zay-slider-food-metabox.php:122
 msgid "Select Image"
@@ -203,12 +203,12 @@ msgid "Zay Slider Options"
 msgstr "Zay Slider Options"
 
 #: zay-slider.php:152 zay-slider.php:153
-msgid "All Slide Menus"
-msgstr "Tous les menus coulissants"
+msgid "All Sliders"
+msgstr "Curseurs"
 
 #: zay-slider.php:162 zay-slider.php:163
-msgid "All Menus Food"
-msgstr "Tous les menus"
+msgid "All Sliders Items"
+msgstr "Tous les éléments du curseurs "
 
 #: zay-slider.php:177
 msgid "Settings Saved"

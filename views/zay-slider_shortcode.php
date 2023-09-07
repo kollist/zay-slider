@@ -51,9 +51,9 @@
                                 </div>
                                 <div class="item-card-info">
                                     <h2 class="item-card-title"><?php the_title() ?> </h2>
-                                    <!-- <p class="item-card-content">
-                                        </p> -->
-                                        <?php the_content(); ?>    
+                                    <div>
+                                        <?php the_content(); ?>  
+                                    </div>  
                                 </div>
                             </div>
                             <?php

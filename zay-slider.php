@@ -162,8 +162,8 @@ if( ! class_exists( 'ZAY_Slider' ) ){
 
             add_submenu_page(
                 'zay_slider_admin',
-                esc_html__( 'Add New Menu', 'zay-slider' ),
-                esc_html__( 'Add New Menu', 'zay-slider' ),
+                esc_html__( 'Add New Slider', 'zay-slider' ),
+                esc_html__( 'Add New Slider', 'zay-slider' ),
                 'manage_options',
                 'post-new.php?post_type=zay-slider-menu',
                 null,
@@ -172,8 +172,8 @@ if( ! class_exists( 'ZAY_Slider' ) ){
 
             add_submenu_page(
                 'zay_slider_admin',
-                esc_html__( 'All Slide Menus', 'zay-slider' ),
-                esc_html__( 'All Slide Menus', 'zay-slider' ),
+                esc_html__( 'All Availible Sliders', 'zay-slider' ),
+                esc_html__( 'All Availible Sliders', 'zay-slider' ),
                 'manage_options',
                 'edit.php?post_type=zay-slider-menu',
                 null,
@@ -182,8 +182,8 @@ if( ! class_exists( 'ZAY_Slider' ) ){
             
             add_submenu_page(
                 'zay_slider_admin',
-                esc_html__( 'All Menus Food', 'zay-slider' ),
-                esc_html__( 'All Menus Food', 'zay-slider' ),
+                esc_html__( 'All Sliders Items', 'zay-slider' ),
+                esc_html__( 'All Sliders Items', 'zay-slider' ),
                 'manage_options',
                 'edit.php?post_type=zay-slider-item',
                 null,

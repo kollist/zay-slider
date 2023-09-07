@@ -59,12 +59,12 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
             register_post_type(
                 'zay-slider-menu',
                 array(
-                    'label' => esc_html__('Food Menu Slider', 'zay-slider'),
-                    'description' => esc_html__("Food Menu Sliders", 'zay-slider'),
+                    'label' => esc_html__('Slider', 'zay-slider'),
+                    'description' => esc_html__("Sliders", 'zay-slider'),
                     'labels' => array(
-                        'name' => esc_html__('Food Menu Slider', 'zay-slider'),
-                        'add_new' => esc_html__('Add New Menu', 'zay-slider'),
-                        'add_new_item' => esc_html__('Add New Menu', 'zay-slider')
+                        'name' => esc_html__('Slider', 'zay-slider'),
+                        'add_new' => esc_html__('Add New Slider', 'zay-slider'),
+                        'add_new_item' => esc_html__('Add New Slider', 'zay-slider')
 
                     ),
                     'public' => true,

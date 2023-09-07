@@ -109,7 +109,7 @@
     <div class="modal-dialog modal-lg dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title"><?php _e( 'Menu item' , 'zay-slider' ); ?></h4>
+                <h4 class="modal-title"><?php _e( 'Slider item' , 'zay-slider' ); ?></h4>
                 <button type="button" class="modal-button">&times;</button>
             </div>
             <div class="modal-body">
@@ -167,5 +167,5 @@
     </div>
 </div>
 <?php else: ?>
-    <h3>Please, SAVE THIS POST to begin adding Menu Items</h3>
+    <h3>Please, SAVE THIS POST to begin adding Slider Items</h3>
 <?php endif; ?>

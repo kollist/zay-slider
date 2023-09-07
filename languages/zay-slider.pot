@@ -111,18 +111,18 @@ msgstr ""
 
 #: post-types/class.zay-slider-cpt.php:62
 #: post-types/class.zay-slider-cpt.php:65
-msgid "Food Menu Slider"
+msgid "Slider"
 msgstr ""
 
 #: post-types/class.zay-slider-cpt.php:63
-msgid "Food Menu Sliders"
+msgid "Sliders"
 msgstr ""
 
 #: post-types/class.zay-slider-cpt.php:66
 #: post-types/class.zay-slider-cpt.php:67
 #: zay-slider.php:142
 #: zay-slider.php:143
-msgid "Add New Menu"
+msgid "Add New Slider"
 msgstr ""
 
 #: post-types/class.zay-slider-cpt.php:79
@@ -150,7 +150,7 @@ msgstr ""
 
 #: post-types/class.zay-slider-cpt.php:155
 msgid ""
-"Add Items To Your Menu"
+"Add Items To Your Slider"
 msgstr ""
 
 #: post-types/class.zay-slider-cpt.php:163
@@ -213,7 +213,7 @@ msgid "Delete"
 msgstr ""
 
 #: views/zay-slider-food-metabox.php:112
-msgid "Menu item"
+msgid "Slider item"
 msgstr ""
 
 #: views/zay-slider-food-metabox.php:122
@@ -252,12 +252,12 @@ msgstr ""
 
 #: zay-slider.php:152
 #: zay-slider.php:153
-msgid "All Slide Menus"
+msgid "All Sliders"
 msgstr ""
 
 #: zay-slider.php:162
 #: zay-slider.php:163
-msgid "All Menus Food"
+msgid "All Sliders Items"
 msgstr ""
 
 #: zay-slider.php:177
