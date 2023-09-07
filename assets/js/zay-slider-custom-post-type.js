@@ -1,7 +1,6 @@
 jQuery(document).ready(function($) {
 
 
-    $('.bgcolor_field').wpColorPicker();
 
 
 
