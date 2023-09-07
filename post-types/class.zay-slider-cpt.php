@@ -25,8 +25,8 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
             if ( $post->post_type === 'zay-slider-menu' ) {
                 // Add your custom link as a new action
                 $post_type = get_post_type( $post->ID );
-                $settings_page_url = admin_url( 'admin.php?page=' . $post_type . '-settings-' . $post->ID );
-                $actions['settings'] = '<a href="'. $settings_page_url .'">'. __("Settings", 'zay-slider') .'</a>';
+                $settings_page_url = get_edit_post_link($post->ID);
+                $actions['settings'] = '<a id="settings-link" href="'. $settings_page_url.'&scroll_to=zay_slider_settings_meta_box">'. __("Settings", 'zay-slider') .'</a>';
             }
         
             return $actions;
@@ -381,6 +381,7 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                 wp_send_json($response);
             }else {
                 wp_send_json([
+                    'id' => $item_id,
                     'status' => 'success',
                     'message' => 'Post got saved successfully' 
                 ]);

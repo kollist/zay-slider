@@ -157,6 +157,7 @@
         height: 100%;
         border-radius: 5px;
         box-shadow: 0.25rem 0.25rem 3rem rgb(0 0 0 / 0.15);
+        object-fit: cover;
     }
     .show-data .item-info .item-show-title {
         margin-left: 16px;

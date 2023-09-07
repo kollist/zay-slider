@@ -160,7 +160,7 @@
             <div class="modal-footer">
                 <button type="reset" class="button button-primary cancel-btn"><?php _e( 'Cancel' , 'zay-slider' ); ?></button>
                 <button type="submit" class="button button-primary save-btn"><?php _e( 'Save' , 'zay-slider' ); ?></button>
-                <button type="submit" class="button button-primary edit-btn" style="display: none"><?php _e( 'Edit' , 'zay-slider' ); ?></button>
+                <button type="submit" data-nonce="<?php echo wp_create_nonce('edit_item_nonce'); ?>" class="button button-primary edit-btn" style="display: none"><?php _e( 'Edit' , 'zay-slider' ); ?></button>
             </div>
 
         </div>

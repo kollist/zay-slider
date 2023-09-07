@@ -216,6 +216,7 @@ if( ! class_exists( 'ZAY_Slider' ) ){
             if ($typenow == 'zay-slider-menu') {
                 wp_enqueue_script('jquery');
                 wp_enqueue_style('zay-slider-admin-style', ZAY_SLIDER_URL . 'assets/css/zay-slider-custom-post-type-style.css');
+                wp_enqueue_script("zay-slider-admin-jq", ZAY_SLIDER_URL . 'assets/js/zay-slider-custom-post-type-script.js');
                 wp_enqueue_script('jquery-ui-sortable');
                 wp_enqueue_script("jquery-ui-dialog");
                 // wp_enqueue_style( 'wp-color-picker' );

@@ -1,7 +1,26 @@
 jQuery(document).ready(function($) {
 
+    let anchorID = getQueryVariable('scroll_to')
 
+    if (anchorID) {
+        var target = $('#' + anchorID);
+        if (target.length) {
+          $('html, body').animate({
+            scrollTop: target.offset().top
+          }, 800);
+        }
+    }
 
+    function getQueryVariable(variable) {
+        let query = window.location.search.substring(1);
+        let vars = query.split("&").map(ele => ele.split("="))
+        let anchorID;
+        for(let i = 0; i < vars.length; i++){
+            if (vars[i][0] === variable){
+                return vars[i][1];            }
+        }
+        
+    }
 
 
     var theDialog = $('.delete-dialog').dialog({
@@ -50,7 +69,7 @@ jQuery(document).ready(function($) {
     }
 
 
-    $(".edit-btn-displayer").click(function (e) {
+    $("#sortable").on('click' ,".edit-btn-displayer", {}, function (e) {
         e.preventDefault();
         let post = $(e.target).closest("li");
         $('.dialogMenuItem').slideDown(
@@ -86,7 +105,7 @@ jQuery(document).ready(function($) {
         editedData.append("itemEditedContent", tinymce.get('my_custom_editor').getContent());
         editedData.append("itemEditedPosttype" , ' zay-slider-item');
         editedData.append("itemEditedThumbnail" , $('.thumb').attr('src'));
-        editedData.append("itemEditedSecurity",  $('.edit-btn-displayer').data('nonce'));
+        editedData.append("itemEditedSecurity",  $('.edit-btn').data('nonce'));
         editedData.append("itemEditedParent_ID", $('#post_ID').val());
         editedData.append("itemEditedPriceAmount", $('.item-price').attr('.hidePrice') ? '' : $('.priceAmount').val());
         editedData.append("itemEditedPriceName",  $('.item-price').attr('.hidePrice') ? '' : $('.priceName').val());
@@ -114,6 +133,7 @@ jQuery(document).ready(function($) {
 
 
     $('.confirmDeleteBtn').click(function (e) {
+        e.preventDefault();
         let postID = theDialog.data('deletedID');
         let deleteNonce = $(this).data('nonce');
         let data =  new FormData();
@@ -147,7 +167,7 @@ jQuery(document).ready(function($) {
         theDialog.dialog('close')
     })
 
-    $('.delete-btn').click(function (e){
+    $("#sortable").on('click' ,'.delete-btn', {},  function (e){
         e.preventDefault()
         let id = $(e.target).closest("li").attr('id');
         theDialog.data('deletedID', id).dialog('open');
@@ -204,14 +224,29 @@ jQuery(document).ready(function($) {
         });
         function doClick(e){
             e.preventDefault();
+
+            $('.item-title').val("Item Title");
+            if (typeof tinymce !== 'undefined') {
+                var editor = tinymce.get('my_custom_editor');
+                if (editor) {
+                  editor.setContent("Your Item Description Goes Here");
+                }
+            }
+
+            $('.thumb').removeAttr('src');
+            $('.item-price').slideUp();
+            $('.add-price').fadeIn();
+            $('.priceAmount').val("");
+            $('.priceName').val("");
+            $('.uploader-upload').show();
+            $('.uploader-image').hide();
+
             $('.dialogMenuItem').slideUp(100,
             function () {
                 $('.model-dialog').slideUp(100);
             });
             $('.dialogMenuItem').hide(100);
             $('.dialogMenuItem').addClass('hide');
-
-           location.reload()
     }
     $('.cancel-btn').click(doClick);
     $('.modal-button').click(doClick);
@@ -231,9 +266,7 @@ jQuery(document).ready(function($) {
             title: 'Select an Image or enter an image URL.'
         });
         custom_uploader.on('select', function(){
-            // console.log(custom_uploader.state().get('selection').toJSON());
             attachement =custom_uploader.state().get('selection').first().toJSON();
-            // console.log(attachement.url);
             $('.thumb').attr('src', attachement.url);
             if ($('.thumb').attr('src')){
                 $('.uploader-upload').hide();
@@ -250,6 +283,7 @@ jQuery(document).ready(function($) {
         })
     }
     $(".save-btn").click(function (e) {
+        e.preventDefault();
         if (!$('.priceAmount').val() && $('.priceName').val()){
             $('.errorMessage').removeClass('hide');
             e.preventDefault();
@@ -261,7 +295,7 @@ jQuery(document).ready(function($) {
         postData.append("itemTitle", $('.item-title').val());
         postData.append("itemContent", tinymce.get('my_custom_editor').getContent());
         postData.append("itemPosttype",'zay-slider-item');
-        postData.append("itemThumbnail", $('.thumb').attr('src') ? $('.thumb').attr('src') : 'https://wordpress.store/wp-content/uploads/woocommerce-placeholder-300x300.png');
+        postData.append("itemThumbnail", $('.thumb').attr('src'));
         postData.append("itemSecurity", $('.zay_slider_nonce').val());
         postData.append("itemParent_ID", $('#post_ID').val());
         postData.append("itemPriceAmount", $('.item-price').attr('.hidePrice') ? '' : $('.priceAmount').val());
@@ -276,7 +310,45 @@ jQuery(document).ready(function($) {
             contentType: false,
             processData: false,
             success: function (res) {
-                console.log(res);
+                if (res.status == 'success'){
+                    let element = $('<li>', {
+                        id: res.id,
+                        class: 'menu-item',
+                      }).html(`
+                        <div class="show-data">      
+                          <img width="70" height="70" style="height: 70px" src="${ $('.thumb').attr('src') ? $('.thumb').attr('src') : `${document.location.origin}/wp-content/uploads/zayslider-default-100x100.jpeg` }" />
+                          <div class="item-info">
+                            <div class="item-show-title">
+                              <h4>${$('.item-title').val()}</h4>
+                              <div class="item-show-price">
+                                <span>${$('.priceAmount').val()}</span>
+                                <span>${$('.priceName').val()}</span>
+                              </div>
+                            </div>
+                            <div class="item-show-desc">
+                              ${tinymce.get('my_custom_editor').getContent()}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="action-data">
+                          <button class="delete-btn">
+                            <span class="deleteIcon dashicons dashicons-trash"></span>
+                          </button>
+                          <button class="edit-btn-displayer" >
+                            <span class="editIcon dashicons dashicons-edit"></span>
+                          </button>
+                        </div>
+                    `);
+
+                    $("#sortable").append(element)
+
+                    $('.dialogMenuItem').slideUp(100,
+                    function () {
+                        $('.model-dialog').slideUp(100);
+                    });
+                    $('.dialogMenuItem').hide(100);
+                    $('.dialogMenuItem').addClass('hide');
+                }
             },
             error: function (xhr) {
                 console.log(xhr)
