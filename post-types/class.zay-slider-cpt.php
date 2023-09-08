@@ -7,7 +7,7 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
         // public $post_id;
         function __construct(){
             add_action('init', array($this, 'create_post_type'));
-            add_action( 'add_meta_boxes', array($this, 'add_meta_boxes'), 10, 2 );
+            add_action( 'add_meta_boxes', array($this, 'add_meta_boxes'));
             add_action( 'save_post', array( $this, 'save_post' ));
             add_action('wp_ajax_submit_cpt', array($this, 'submit_cpt'));
             add_filter('manage_zay-slider-item_posts_columns', array($this, 'zay_slider_cpt_items_columns'));
@@ -149,7 +149,7 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                      break;
             }
         }
-        public function add_meta_boxes($post_type, $post) {
+        public function add_meta_boxes() {
             add_meta_box(
                 'zay_slider_menu_meta_box',
                 esc_html__('Add Items To Your Menu', 'zay-slider'),
@@ -160,7 +160,7 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
             );
             add_meta_box(
                 'zay_slider_item_meta_box',
-                esc_html__('Add Item Price', 'zay-slider'),
+                esc_html__('Items Additional Data', 'zay-slider'),
                 array($this, 'add_item_meta_boxes'),
                 'zay-slider-item',
                 'normal',
@@ -170,12 +170,62 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
             add_meta_box(
                 'zay_slider_settings_meta_box',
                 esc_html__('Slider Slides Settings', 'zay-slider'),
-                function () use ($post){
-                    $this->add_settings_meta_box($post);
-                },
+                array($this, 'add_settings_meta_box'),
                 'zay-slider-menu',
                 'normal'
             );
+            
+            add_meta_box(
+                'zay_slider_item_meta_displayer',
+                esc_html__("Optional dispalying", 'zay-slider'),
+                array($this, "meta_displayer"),
+                'zay-slider-item',
+                'normal'
+            );
+        }
+
+        public function meta_displayer($post) {
+            $hide_title = get_post_meta($post->ID, "_hide_title", true);
+            $hide_image = get_post_meta($post->ID, "_hide_image", true);
+            $hide_price = get_post_meta($post->ID, "_hide_price", true);
+            $hide_name = get_post_meta($post->ID, "_hide_name", true);
+            ?>
+            <table>
+                <tr>
+                    <td>
+                        <label for="_hide_title"> <?php _e("Hide Title", 'zay-slider') ?> </label>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="_hide_title" id="_hide_title" value="1" <?php checked("1", $hide_title, true) ?> >
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="_hide_image"> <?php _e("Hide image", 'zay-slider') ?> </label>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="_hide_image" id="_hide_image" value="1" <?php checked("1", $hide_image, true) ?> >
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="_hide_price"> <?php _e("Hide Price", 'zay-slider') ?> </label>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="_hide_price" id="_hide_price" value="1" <?php checked("1", $hide_price, true) ?> >
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="_hide_name"> <?php _e("Hide Name", 'zay-slider') ?> </label>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="_hide_name" id="_hide_name" value="1" <?php checked("1", $hide_name, true) ?> >
+                    </td>
+                </tr>
+            </table>
+
+            <?php 
             
         }
 
@@ -269,8 +319,23 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                     $old_price_amount = get_post_meta($post_id, 'zay_slider_item_price', true);
                     $new_price_name = $_POST['zay_slider_item_price_name'];
                     $old_price_name = get_post_meta($post_id, "zay_slider_item_price_name", true);
+                    $new_crearor_name = $_POST["zay_slider_item_creator_name"];
+                    $old_creator_name = get_post_meta($post_id, "zay_slider_item_creator_name", true);
+                    $hide_title = $_POST[ "_hide_title"];
+                    $hide_title_old = get_post_meta($post_id, "_hide_title", true);
+                    $hide_image = $_POST["_hide_image"  ];
+                    $hide_image_old = get_post_meta($post_id, "_hide_image", true);
+                    $hide_price = $_POST["_hide_price"];
+                    $hide_price_old = get_post_meta($post_id, "_hide_price", true);
+                    $hide_name = $_POST["_hide_name"];
+                    $hide_name_old = get_post_meta($post_id, "_hide_name", true);
                     update_post_meta($post_id, 'zay_slider_item_price', $new_price_amount, $old_price_amount);
                     update_post_meta($post_id, 'zay_slider_item_price_name', $new_price_name, $old_price_name);
+                    update_post_meta($post_id, 'zay_slider_item_creator_name', $new_crearor_name, $old_creator_name);
+                    update_post_meta($post_id, "_hide_title", $hide_title, $hide_title_old);
+                    update_post_meta($post_id, "_hide_image", $hide_image, $hide_image_old);
+                    update_post_meta($post_id, "_hide_price", $hide_price, $hide_price_old);
+                    update_post_meta($post_id, "_hide_name", $hide_name, $hide_name_old);
                 }
             }
             
@@ -295,11 +360,9 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                 'post_type' => sanitize_text_field($_POST['itemEditedPosttype']),
                 'post_status' => 'publish'
             );
+            $postID = wp_update_post($post_data);
 
-            ob_start();
-            wp_update_post($post_data);
-
-            if (!ob_get_clean()){
+            if (!$postID){
                 wp_send_json_error(array(
                     'message' =>  __('Something Wrong Happened', 'zay-slider'),
                 ));
@@ -310,9 +373,10 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                 update_post_meta(intval(sanitize_text_field($_POST['itemEditedID'])), '_thumbnail_id', $new_thumbnail_id);
             }
             if ($_POST['itemEditedPriceAmount'] && $_POST['itemEditedPriceName']){
-                update_post_meta(intval(sanitize_text_field($_POST['itemEditedID'])), 'zay_slider_item_price', $_POST['itemEditedPriceAmount'] );
-                update_post_meta(intval(sanitize_text_field($_POST['itemEditedID'])), 'zay_slider_item_price_name', $_POST['itemEditedPriceName']);
-                update_post_meta(intval(sanitize_text_field($_POST['itemEditedID'])), 'zay_slider_item_parent', $_POST['itemEditedParent_ID']);
+                update_post_meta($postID, 'zay_slider_item_price', sanitize_text_field($_POST['itemEditedPriceAmount']) );
+                update_post_meta($postID, 'zay_slider_item_price_name', sanitize_text_field($_POST['itemEditedPriceName']));
+                update_post_meta($postID, 'zay_slider_item_parent', sanitize_text_field($_POST['itemEditedParent_ID']));
+                update_post_meta($postID, 'zay_slider_item_creator_name', sanitize_text_field($_POST["itemEditedCreatorName"]));
             }
 
             wp_send_json_success(array(
@@ -373,9 +437,24 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                 $old_price_name = get_post_meta($item_id, "zay_slider_item_price_name", true);
                 $new_parent_id = $_POST['itemParent_ID'];
                 $old_parent_id = get_post_meta($item_id, 'zay_slider_item_parent', true);
+                $new_creator_name = $_POST['creatorName'];
+                $old_creator_name = get_post_meta($item_id, 'zay_slider_item_creator_name', true);
+                $hide_title = $_POST[ "_hide_title"];
+                $hide_title_old = get_post_meta($item_id, "_hide_title", true);
+                $hide_image = $_POST["_hide_image"  ];
+                $hide_image_old = get_post_meta($item_id, "_hide_image", true);
+                $hide_price = $_POST["_hide_price"];
+                $hide_price_old = get_post_meta($item_id, "_hide_price", true);
+                $hide_name = $_POST["_hide_name"];
+                $hide_name_old = get_post_meta($item_id, "_hide_name", true);
                 update_post_meta($item_id, 'zay_slider_item_price', $new_price_amount, $old_price_amount);
                 update_post_meta($item_id, 'zay_slider_item_price_name', $new_price_name, $old_price_name);
                 update_post_meta($item_id, 'zay_slider_item_parent', $new_parent_id, $old_parent_id);
+                update_post_meta($item_id, 'zay_slider_item_creator_name', $new_creator_name, $old_creator_name);
+                update_post_meta($item_id, "_hide_title", $hide_title, $hide_title_old);
+                update_post_meta($item_id, "_hide_image", $hide_image, $hide_image_old);
+                update_post_meta($item_id, "_hide_price", $hide_price, $hide_price_old);
+                update_post_meta($item_id, "_hide_name", $hide_name, $hide_name_old);
             }
             if ($response){
                 wp_send_json($response);
@@ -396,25 +475,41 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
             $price_amount = get_post_meta($post->ID, 'zay_slider_item_price', true);
             $price_name = get_post_meta($post->ID, 'zay_slider_item_price_name', true);
             $parent_id = get_post_meta($post->ID, 'zay_slider_item_parent', true);
+            $name = get_post_meta($post->ID, 'zay_slider_item_creator_name', true);
             ?>
-                <div class="item-price" style="display: flex; justify-content: space-between; align-items: center;">
-                    <div id="priceInputs">
-                        <input 
-                            id="zay_slider_item_price" 
-                            class="priceAmount" 
-                            name="zay_slider_item_price" 
-                            placeholder="<?php _e('Price', 'zay-slider'); ?>" 
-                            value="<?php isset($price_amount) ? _e( esc_html( $price_amount)) : '' ?>"
-                        >
-                        <input value="<?php isset($price_name) ? _e( esc_html( $price_name)) : '' ?>" id="zay_slider_item_price_name" name="zay_slider_item_price_name" class="priceName" placeholder="<?php _e('Title', 'zay-slider'); ?>" >
-                    </div>
-                    <div class="item-parent">
-                        <fieldset style="">
-                            <legend><?php _e('PARENT ID: ', 'zay-slider') ?></legend>
-                            <input readonly type="text" name="zay_slider_item_parent" id="zay_slider_item_parent" value="<?php echo esc_html($parent_id) ?>">
-                        </fieldset>
-                    </div>
-                </div>
+                <table class="item-price"><tr>
+                        <td>
+                            <label for="zay_slider_item_parent" zay_slider_item_parent></label><?php _e('PARENT ID: ', 'zay-slider') ?></label>
+                        </td>
+                        <td>
+                            <input type="text" readonly name="zay_slider_item_parent" id="zay_slider_item_parent" value="<?php echo esc_html($parent_id) ?>">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="zay_slider_item_creator_name"> <?php _e("Name", 'zay-slider') ?> </label>
+                        </td>
+                        <td>
+                            <input type="text" placeholder="<?php _e('Creator Name', 'zay-slider'); ?>" name="zay_slider_item_creator_name" id="zay_slider_item_creator_name" value="<?php echo isset($name) ? esc_html($name) : "" ?>">
+                        </td>
+                    </tr>     
+                    <tr>
+                        <td>
+                            <label for="zay_slider_item_price"> <?php _e("Items Price", "zay-slider") ?>: </label>
+                        </td>
+                        <td>
+                            <input 
+                                type="text"
+                                id="zay_slider_item_price" 
+                                class="priceAmount" 
+                                name="zay_slider_item_price" 
+                                placeholder="<?php _e('Price', 'zay-slider'); ?>" 
+                                value="<?php echo isset($price_amount) ? esc_html( $price_amount) : '' ?>"
+                            >
+                            <input type="text" value="<?php echo isset($price_name) ? esc_html( $price_name) : '' ?>" id="zay_slider_item_price_name" name="zay_slider_item_price_name" class="priceName" placeholder="<?php _e('Price Title', 'zay-slider'); ?>" >
+                        </td>
+                    </tr>
+                </table>
             <?php
         }
         public function delete_item_post() {

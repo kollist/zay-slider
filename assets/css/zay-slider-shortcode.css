@@ -23,10 +23,31 @@
   margin-left: 15%;
 }
 
+.item-author {
+  position: absolute;
+  width: 50%;
+  height: 45px;
+  background-color:#d7d7d7;
+  left: -45%;
+  color: #414141;
+  top: 10%;
+  font-size: 1.8em;
+  text-align: center;
+  line-height: 1.4;
+  font-weight: bold;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.4);
+  z-index: 5;
+  transition: all ease-in-out .4s;
+}
+.item-author:hover {
+  left: 0px;
+}
+
 .item-card {
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
+  position: relative;
 }
 
 .item-card .item-card-img {
@@ -38,23 +59,41 @@
   object-fit: cover;
   max-width: 100% !important;
 }
-.item-card-info {
-  height: 60%;
-  padding: 10px 5px;
+
+.item-card-data {
+  padding-left: 10px;
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 15%;
+}
+.item-card-description {
+  font-size: .7em;
+  white-space: wrap;
+  padding-left: 20px;
+  height: 45%;
+  overflow-y: scroll;
 }
 
-.item-card-info .item-card-title {
-  font-size: 1.3em;
+
+
+.item-card-price {
   padding-top: 10px;
+  padding-right: 20px;
 }
-.item-card-info p {
-  font-size: .8em;
-  white-space: wrap;
+
+
+.item-card-price span {
+  font-size: .9em;
 }
 
 @media screen and (max-width: 900px){
   .shortcode-container {
     width: 90vw;
     height: fit-content;
+  }
+  .item-card-description {
+    font-size: .5em;
   }
 }

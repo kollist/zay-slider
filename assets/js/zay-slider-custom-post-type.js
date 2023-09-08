@@ -54,8 +54,14 @@ jQuery(document).ready(function($) {
         if ( informations[2] !== "" || informations[3] !== ""){
             $('.item-price').slideDown();
             $('.add-price').fadeOut();
-            $("#zay_slider_item_price").val( informations[2])
-            $("#zay_slider_item_price_name").val( informations[3])
+            $("#zay_slider_item_price").val(informations[2])
+            $("#zay_slider_item_price_name").val(informations[3])
+        }
+
+        if (informations[5] != ""){
+            $('.item-creator-name').slideDown();
+            $(".add-creator-name").fadeOut();
+            $("#zay_slider_item_creator_name").val(informations[5])
         }
         $('.thumb').attr('src',  informations[4])
         if ($('.thumb').attr('src')){
@@ -81,20 +87,32 @@ jQuery(document).ready(function($) {
                 let itemPrice = post.find(".item-info .item-show-title .item-show-price").find('span:first').text();
                 let itemPriceName = post.find(".item-info .item-show-title .item-show-price span").last().text();
                 let itemPicture = post.find('.show-data img').attr('src');
+                let itemCreator = post.find(".show-data .item-author span").text();
 
                 $(".edit-btn").show();
                 $(".save-btn").hide();
                 $(".modal-dialog").data("id", post.attr("id"));
-                editFillUp([itemTitle, itemDesc, itemPrice, itemPriceName, itemPicture]);
+                editFillUp([itemTitle, itemDesc, itemPrice, itemPriceName, itemPicture, itemCreator]);
             }
             );
             $('.dialogMenuItem').removeClass('hide')
     })
 
+    $(".add-creator-name").click(function (e){
+        e.preventDefault();
+        $('.item-creator-name').slideDown();
+        $(this).fadeOut();
+    })
+    $('.rmvCreatorName').click(function (e){
+        e.preventDefault();
+        $('.item-creator-name').slideUp();
+        $('.add-creator-name').fadeIn();
+    })
+
     $(".edit-btn").click(function (e) {
+        e.preventDefault();
         if (!$('.priceAmount').val() && $('.priceName').val()){
             $('.errorMessage').removeClass('hide');
-            e.preventDefault();
             return
         }else {
             $('.errorMessage').addClass('hide');
@@ -109,6 +127,7 @@ jQuery(document).ready(function($) {
         editedData.append("itemEditedParent_ID", $('#post_ID').val());
         editedData.append("itemEditedPriceAmount", $('.item-price').attr('.hidePrice') ? '' : $('.priceAmount').val());
         editedData.append("itemEditedPriceName",  $('.item-price').attr('.hidePrice') ? '' : $('.priceName').val());
+        editedData.append("itemEditedCreatorName",  $('.item-creator-name').attr('.hideCreator') ? '' : $('#zay_slider_item_creator_name').val());
         editedData.append("action", 'edit_item_post');
 
         $.ajax({
@@ -120,7 +139,18 @@ jQuery(document).ready(function($) {
             contentType: false,
             processData: false,
             success: function (res) {
-                console.log(res);
+                if (res.success){
+                    doClick(e);
+                    $("#"+editedData.get("itemEditedID")+' .item-show-title h4').html(editedData.get('itemEditedTitle'));  
+                    $("#"+editedData.get("itemEditedID")+" .item-show-desc").html(editedData.get('itemEditedContent'))
+                    $("#"+editedData.get("itemEditedID")+' .item-show-price span:first').html(editedData.get('itemEditedPriceAmount'));
+                    $("#"+editedData.get("itemEditedID")+' .item-show-price span:last').html(editedData.get('itemEditedPriceName'));
+                    $("#"+editedData.get("itemEditedID")+' .item-author span').html(editedData.get('itemEditedCreatorName'));
+                    let src = editedData.get('itemEditedThumbnail') ? editedData.get('itemEditedThumbnail') : `${document.location.origin}/wp-content/uploads/zayslider-default-100x100.jpeg`;
+                    let img = $("#"+editedData.get("itemEditedID")+" img");
+                    img.attr('src', src);
+                    img.attr('srcset', "");
+                }
             },
             error: function (xhr) {
                 console.log(xhr)
@@ -151,6 +181,7 @@ jQuery(document).ready(function($) {
             contentType: false,
             processData: false,
             success: function (res) {
+                console.log(res);
                 theDialog.dialog('close');
                 post.fadeOut( function(){
                     post.remove();
@@ -234,12 +265,15 @@ jQuery(document).ready(function($) {
             }
 
             $('.thumb').removeAttr('src');
-            $('.item-price').slideUp();
+            $('.item-price').slideUp();  
             $('.add-price').fadeIn();
             $('.priceAmount').val("");
             $('.priceName').val("");
             $('.uploader-upload').show();
             $('.uploader-image').hide();
+            $("#zay_slider_item_creator_name").val("");
+            $('.item-creator-name').slideUp();
+            $('.add-creator-name').fadeIn();
 
             $('.dialogMenuItem').slideUp(100,
             function () {
@@ -247,6 +281,14 @@ jQuery(document).ready(function($) {
             });
             $('.dialogMenuItem').hide(100);
             $('.dialogMenuItem').addClass('hide');
+
+            $(".edit-btn").hide();
+            $(".save-btn").show();
+
+            $("#_hide_title").prop("checked", false);
+            $("#_hide_image").prop("checked", false);
+            $("#_hide_name").prop("checked", false);
+            $("#_hide_price").prop("checked", false);
     }
     $('.cancel-btn').click(doClick);
     $('.modal-button').click(doClick);
@@ -300,7 +342,16 @@ jQuery(document).ready(function($) {
         postData.append("itemParent_ID", $('#post_ID').val());
         postData.append("itemPriceAmount", $('.item-price').attr('.hidePrice') ? '' : $('.priceAmount').val());
         postData.append("itemPriceName",  $('.item-price').attr('.hidePrice') ? '' : $('.priceName').val());
+        postData.append('creatorName', $('item-creator-name').attr("hideCreator") ? "" : $('#zay_slider_item_creator_name').val())
         postData.append("action", 'submit_cpt');
+        console.log($("#_hide_title")[0].checked && "1");
+        console.log($("#_hide_image")[0].checked && "1");
+        console.log($("#_hide_name")[0].checked && "1");
+        console.log($("#_hide_price")[0].checked && "1");
+        postData.append("_hide_title", $("#_hide_title")[0].checked && "1")
+        postData.append("_hide_image", $("#_hide_image")[0].checked && "1")
+        postData.append("_hide_name", $("#_hide_name")[0].checked && "1")
+        postData.append("_hide_price", $("#_hide_price")[0].checked && "1")
         $.ajax({
             url: ZAY_FRONT.ajaxurl,
             action: 'zay-slider-jq',
@@ -316,13 +367,15 @@ jQuery(document).ready(function($) {
                         class: 'menu-item',
                       }).html(`
                         <div class="show-data">      
-                          <img width="70" height="70" style="height: 70px" src="${ $('.thumb').attr('src') ? $('.thumb').attr('src') : `${document.location.origin}/wp-content/uploads/zayslider-default-100x100.jpeg` }" />
+                          <div class="show-thumb">
+                            <img width="70" height="70" style="height: 70px" src="${ $('.thumb').attr('src') ? $('.thumb').attr('src') : `${document.location.origin}/wp-content/uploads/zayslider-default-100x100.jpeg` }" />
+                          </div>
                           <div class="item-info">
                             <div class="item-show-title">
                               <h4>${$('.item-title').val()}</h4>
                               <div class="item-show-price">
-                                <span>${$('.priceAmount').val()}</span>
-                                <span>${$('.priceName').val()}</span>
+                                <span>${$('#zay_slider_item_price').val()}</span>
+                                <span>${$('#zay_slider_item_price_name').val()}</span>
                               </div>
                             </div>
                             <div class="item-show-desc">
@@ -348,6 +401,7 @@ jQuery(document).ready(function($) {
                     });
                     $('.dialogMenuItem').hide(100);
                     $('.dialogMenuItem').addClass('hide');
+                    doClick(e)
                 }
             },
             error: function (xhr) {

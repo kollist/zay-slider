@@ -32,6 +32,7 @@
         font-size: 1.2em;
     }
     .modal-button, 
+    .rmvCreatorName,
     .rmvPrice {
         background-color: transparent;
         border: none;
@@ -71,15 +72,22 @@
         flex-direction: column;
     }
 
-    .form-group input{
+    .form-group:first-child input{
         width: 100%;
+    }
+
+    .item-creator-name.hideCreator {
+        display: none;
+    }
+    .item-creator-name{
+        display: block;
     }
 
     .form-group:nth-child(2) {
         padding: 20px 0;
         width: 100%;
     }
-    .form-group:last-child input {
+    .form-group input {
         width: 45%;
     }
     .modal-footer {
@@ -165,7 +173,7 @@
         justify-content: space-between;
         align-items: center;
     }
-    .show-data .item-info p {
+    .show-data .item-info .item-show-desc{
         margin-left: 16px;
     }
     

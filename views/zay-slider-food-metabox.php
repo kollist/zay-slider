@@ -54,30 +54,36 @@
                 $my_query->the_post();
                 $price_amount = get_post_meta( get_the_ID(), 'zay_slider_item_price', true );
                 $price_currency = get_post_meta( get_the_ID(), 'zay_slider_item_price_name', true );
-                
+                $creator_name = get_post_meta(get_the_ID(), 'zay_slider_item_creator_name', true);
                 ?>
 
 
                 <li class="menu-item" id="<?php the_ID(); ?>">
                     <div class="show-data">
                         
-                        <?php 
-                            if (has_post_thumbnail()): 
-                                the_post_thumbnail(array(70, 70));
-                            else:
-                                echo wp_get_attachment_image(get_option('zayslider_default_image'), array(70, 70)); 
-                            endif;
-                        ?>
+                        <div class="show-thumb">
+                            <?php 
+                                if (has_post_thumbnail()): 
+                                    the_post_thumbnail(array(70, 70));
+                                else:
+                                    echo wp_get_attachment_image(get_option('zayslider_default_image'), array(70, 70)); 
+                                endif;
+                            ?>
+                        </div>
                         <div class="item-info">
                             <div class="item-show-title">
                                 <h4> <?php the_title(); ?> </h4>
+                                <div class="item-author">
+                                    <span><?php echo isset($creator_name) ? $creator_name : "" ?></span>
+                                </div>
                                 <div class="item-show-price">
                                     <span><?php echo isset($price_amount) ? $price_amount : "" ?></span>
                                     <span><?php echo isset($price_currency) ? $price_currency : "" ?></span>
                                 </div>
+                                
                             </div>
                             <div class="item-show-desc">
-                            <?php the_content(); ?>
+                                <?php the_content(); ?>
                             </div>
                         </div>
                     </div>
@@ -127,6 +133,40 @@
                                 <button type="button" class="icon-delete">&times;</button>
                             </div>
                         </div>
+                        <table>
+                            <tr>
+                                <td>
+                                    <label for="_hide_title"> <?php _e("Hide Title", 'zay-slider') ?> </label>
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="_hide_title" id="_hide_title" value="1" >
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="_hide_image"> <?php _e("Hide image", 'zay-slider') ?> </label>
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="_hide_image" id="_hide_image" value="1" >
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="_hide_price"> <?php _e("Hide Price", 'zay-slider') ?> </label>
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="_hide_price" id="_hide_price" value="1" >
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="_hide_name"> <?php _e("Hide Name", 'zay-slider') ?> </label>
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="_hide_name" id="_hide_name" value="1" >
+                                </td>
+                            </tr>
+                        </table>
                     </div>
 
                     <div class="form-container">
@@ -150,6 +190,16 @@
                                             </div>
                                             <span id="errorMessage" class="errorMessage hide">You can't have a price name without a price</span>
                                             <button  class="add-price button button-default" ><?php _e( 'Add price' , 'zay-slider' ); ?></button>
+                                        </div>
+                        </div>
+                        <div class="form-group creator-name-form" >
+                                        <label><?php _e('Name','zay-slider'); ?></label>
+                                        <div class="edit-creator-name">
+                                            <div class="item-creator-name hideCreator">
+                                                <input id="zay_slider_item_creator_name" name='zay_slider_item_creator_name' class="creatorName" placeholder="<?php _e('Name', 'zay-slider'); ?>" >
+                                                <button type="button" class="rmvCreatorName">&times;</button>
+                                            </div>
+                                            <button  class="add-creator-name button button-default" ><?php _e( 'Add Name' , 'zay-slider' ); ?></button>
                                         </div>
                         </div>
                     </div>
