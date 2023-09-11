@@ -52,16 +52,20 @@
             global $wp;
             while($my_query->have_posts()):
                 $my_query->the_post();
-                $price_amount = get_post_meta( get_the_ID(), 'zay_slider_item_price', true );
-                $price_currency = get_post_meta( get_the_ID(), 'zay_slider_item_price_name', true );
+                $price_amount = get_post_meta(get_the_ID(), 'zay_slider_item_price', true );
+                $price_currency = get_post_meta(get_the_ID(), 'zay_slider_item_price_name', true );
                 $creator_name = get_post_meta(get_the_ID(), 'zay_slider_item_creator_name', true);
+                $hide_title = get_post_meta(get_the_ID(), "_hide_title", true);
+                $hide_image = get_post_meta(get_the_ID(), "_hide_image", true);
+                $hide_price = get_post_meta(get_the_ID(), "_hide_price", true);
+                $hide_name = get_post_meta(get_the_ID(), "_hide_name", true);
                 ?>
 
 
                 <li class="menu-item" id="<?php the_ID(); ?>">
                     <div class="show-data">
                         
-                        <div class="show-thumb">
+                        <div class="show-thumb" data-hide="<?php echo $hide_image  ?>">
                             <?php 
                                 if (has_post_thumbnail()): 
                                     the_post_thumbnail(array(70, 70));
@@ -71,12 +75,12 @@
                             ?>
                         </div>
                         <div class="item-info">
-                            <div class="item-show-title">
-                                <h4> <?php the_title(); ?> </h4>
-                                <div class="item-author">
+                            <div class="item-show-info">
+                                <h4 data-hide="<?php echo $hide_title ?>" > <?php the_title(); ?> </h4>
+                                <div class="item-author" data-hide="<?php echo $hide_name ?>" >
                                     <span><?php echo isset($creator_name) ? $creator_name : "" ?></span>
                                 </div>
-                                <div class="item-show-price">
+                                <div class="item-show-price" data-hide="<?php echo $hide_title ?>" >
                                     <span><?php echo isset($price_amount) ? $price_amount : "" ?></span>
                                     <span><?php echo isset($price_currency) ? $price_currency : "" ?></span>
                                 </div>

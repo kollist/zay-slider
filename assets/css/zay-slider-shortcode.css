@@ -73,7 +73,7 @@
   white-space: wrap;
   padding-left: 20px;
   height: 45%;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 
 

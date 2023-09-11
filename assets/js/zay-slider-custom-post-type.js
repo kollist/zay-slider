@@ -43,6 +43,14 @@ jQuery(document).ready(function($) {
             $('.uploader-upload').show();
         })
 
+
+        $(".show-thumb").data("hide");
+
+        $("#_hide_title").prop("checked", $(".item-show-info h4").data("hide") == "1" ? true : false);
+        $("#_hide_image").prop("checked", $(".show-thumb").data("hide") == "1" ? true : false);
+        $("#_hide_name").prop("checked", $(".item-show-info .item-author").data("hide") == "1" ? true : false);
+        $("#_hide_price").prop("checked", $(".item-show-price").data("hide") == "1" ? true : false);
+
         $('#itemTitle').val(informations[0]);
         if (typeof tinymce !== 'undefined') {
             var editor = tinymce.get('my_custom_editor');
@@ -82,10 +90,10 @@ jQuery(document).ready(function($) {
             100,
             function () {
                 $('.model-dialog').slideDown();
-                let itemTitle = post.find('.item-info .item-show-title h4').text();
+                let itemTitle = post.find('.item-info .item-show-info h4').text();
                 let itemDesc = post.find(".item-info .item-show-desc").html();
-                let itemPrice = post.find(".item-info .item-show-title .item-show-price").find('span:first').text();
-                let itemPriceName = post.find(".item-info .item-show-title .item-show-price span").last().text();
+                let itemPrice = post.find(".item-info .item-show-info .item-show-price").find('span:first').text();
+                let itemPriceName = post.find(".item-info .item-show-info .item-show-price span").last().text();
                 let itemPicture = post.find('.show-data img').attr('src');
                 let itemCreator = post.find(".show-data .item-author span").text();
 
@@ -141,7 +149,7 @@ jQuery(document).ready(function($) {
             success: function (res) {
                 if (res.success){
                     doClick(e);
-                    $("#"+editedData.get("itemEditedID")+' .item-show-title h4').html(editedData.get('itemEditedTitle'));  
+                    $("#"+editedData.get("itemEditedID")+' .item-show-info h4').html(editedData.get('itemEditedTitle'));  
                     $("#"+editedData.get("itemEditedID")+" .item-show-desc").html(editedData.get('itemEditedContent'))
                     $("#"+editedData.get("itemEditedID")+' .item-show-price span:first').html(editedData.get('itemEditedPriceAmount'));
                     $("#"+editedData.get("itemEditedID")+' .item-show-price span:last').html(editedData.get('itemEditedPriceName'));
@@ -344,10 +352,6 @@ jQuery(document).ready(function($) {
         postData.append("itemPriceName",  $('.item-price').attr('.hidePrice') ? '' : $('.priceName').val());
         postData.append('creatorName', $('item-creator-name').attr("hideCreator") ? "" : $('#zay_slider_item_creator_name').val())
         postData.append("action", 'submit_cpt');
-        console.log($("#_hide_title")[0].checked && "1");
-        console.log($("#_hide_image")[0].checked && "1");
-        console.log($("#_hide_name")[0].checked && "1");
-        console.log($("#_hide_price")[0].checked && "1");
         postData.append("_hide_title", $("#_hide_title")[0].checked && "1")
         postData.append("_hide_image", $("#_hide_image")[0].checked && "1")
         postData.append("_hide_name", $("#_hide_name")[0].checked && "1")
@@ -367,13 +371,16 @@ jQuery(document).ready(function($) {
                         class: 'menu-item',
                       }).html(`
                         <div class="show-data">      
-                          <div class="show-thumb">
+                          <div class="show-thumb" data-hide="${postData.get("_hide_image")}">
                             <img width="70" height="70" style="height: 70px" src="${ $('.thumb').attr('src') ? $('.thumb').attr('src') : `${document.location.origin}/wp-content/uploads/zayslider-default-100x100.jpeg` }" />
                           </div>
                           <div class="item-info">
-                            <div class="item-show-title">
-                              <h4>${$('.item-title').val()}</h4>
-                              <div class="item-show-price">
+                            <div class="item-show-info">
+                              <h4 data-hide="${postData.get("_hide_title")}">${$('.item-title').val()}</h4>
+                              <div class="item-author" data-hide="${postData.get("_hide_name")}" >
+                                    <span>${postData.get("creatorName")}</span>
+                                </div>
+                              <div class="item-show-price" data-hide="${postData.get("_hide_price")}">
                                 <span>${$('#zay_slider_item_price').val()}</span>
                                 <span>${$('#zay_slider_item_price_name').val()}</span>
                               </div>

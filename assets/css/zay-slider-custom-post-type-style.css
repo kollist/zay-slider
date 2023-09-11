@@ -167,7 +167,7 @@
         box-shadow: 0.25rem 0.25rem 3rem rgb(0 0 0 / 0.15);
         object-fit: cover;
     }
-    .show-data .item-info .item-show-title {
+    .show-data .item-info .item-show-info {
         margin-left: 16px;
         display: flex;
         justify-content: space-between;
@@ -283,3 +283,4 @@
             width: 90%;
         }
     }
+    

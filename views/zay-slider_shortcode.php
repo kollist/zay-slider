@@ -49,8 +49,13 @@
                             $hide_image = get_post_meta(get_the_ID(), "_hide_image", true);
                             $hide_price = get_post_meta(get_the_ID(), "_hide_price", true);
                             $hide_name = get_post_meta(get_the_ID(), "_hide_name", true);
+                            $custom_css = get_post_meta(get_the_ID(), "_custom_css", true);
                             ?>
-                            <div draggable="false" class="item-card swiper-slide ">
+                            <style type="text/css">
+                                <?php echo esc_html($custom_css) ?>
+
+                            </style>
+                            <div id="item_<?php the_ID(); ?>" draggable="false" class="item-card swiper-slide ">
                                 <div class="item-card-img" style="display: <?php echo $hide_image == "1" ? "none" : "" ?> ;" >
                                     <?php 
                                         if (! has_post_thumbnail() ) {

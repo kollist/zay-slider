@@ -182,8 +182,42 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                 'zay-slider-item',
                 'normal'
             );
+            add_meta_box(
+                "zay_slider_item_custom_css",
+                esc_html("Slide Custom CSS", 'zay-slider'),
+                array($this, "item_custom_css"),
+                'zay-slider-item',
+                'normal'
+            );
         }
-
+        public function item_custom_css($post) {
+            $custom_css = get_post_meta(get_the_ID(), "_custom_css", true);
+            ?>
+                <div class="custom-css" style="display:flex; justify-content: space-between; align-items: center;">
+                    <div class="custom-css-area" style="display:flex; align-items: center; justify-content: space-around;">
+                        <label style="padding-right: 5px;" for="_custom_css"> <?php _e("Custom CSS", 'zay-slider') ?>  </label>
+                        <textarea name="_custom_css" id="_custom_css" cols="50" rows="10"> <?php echo isset($custom_css) ? $custom_css : ".carousel #item_$post->ID.item-card{}" ?> </textarea>
+                    </div>
+                    <div class="custom-css-selectors" >
+                        <h4>The Used selectors: (copy the selector text to the textarea)</h4>
+                        <ul>
+                            <li>.carousel #item_<?php echo $post->ID ?>.item-card </li>
+                            <li>.carousel #item_<?php echo $post->ID ?> .item-card-img</li>
+                            <li>.carousel #item_<?php echo $post->ID ?> .item-card-img img</li>
+                            <li>.carousel #item_<?php echo $post->ID ?> .item-card-data</li>
+                            <li>.carousel #item_<?php echo $post->ID ?> .item-card-title</li>
+                            <li>.carousel #item_<?php echo $post->ID ?> .item-card-price</li>
+                            <li>.carousel #item_<?php echo $post->ID ?> .item-card-price span</li>
+                            <li>.carousel #item_<?php echo $post->ID ?> .item-card-price .price</li>
+                            <li>.carousel #item_<?php echo $post->ID ?> .item-card-price .price_name</li>
+                            <li>.carousel #item_<?php echo $post->ID ?> .item-card-description</li>
+                            <li>.carousel #item_<?php echo $post->ID ?> .item-author</li>
+                            <li>.carousel #item_<?php echo $post->ID ?> .item-author span</li>
+                        </ul>
+                    </div>
+                </div>
+            <?php
+        }
         public function meta_displayer($post) {
             $hide_title = get_post_meta($post->ID, "_hide_title", true);
             $hide_image = get_post_meta($post->ID, "_hide_image", true);
@@ -228,8 +262,6 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
             <?php 
             
         }
-
-
         public function add_settings_meta_box( $post ) {
 
             $post_items = new WP_Query(array(
@@ -283,8 +315,6 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                 </table>
                     <?php
         }
-        
-
         public function save_post( $post_id ){
 
             if ( isset( $_POST['zay_slider_nonce'] )){
@@ -321,28 +351,28 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                     $old_price_name = get_post_meta($post_id, "zay_slider_item_price_name", true);
                     $new_crearor_name = $_POST["zay_slider_item_creator_name"];
                     $old_creator_name = get_post_meta($post_id, "zay_slider_item_creator_name", true);
-                    $hide_title = $_POST[ "_hide_title"];
                     $hide_title_old = get_post_meta($post_id, "_hide_title", true);
-                    $hide_image = $_POST["_hide_image"  ];
                     $hide_image_old = get_post_meta($post_id, "_hide_image", true);
-                    $hide_price = $_POST["_hide_price"];
                     $hide_price_old = get_post_meta($post_id, "_hide_price", true);
-                    $hide_name = $_POST["_hide_name"];
                     $hide_name_old = get_post_meta($post_id, "_hide_name", true);
+                    $hide_title = $_POST[ "_hide_title"];
+                    update_post_meta($post_id, "_hide_title", $hide_title, $hide_title_old);
+                    $hide_image = $_POST["_hide_image"  ];
+                    update_post_meta($post_id, "_hide_image", $hide_image, $hide_image_old);
+                    $hide_name = $_POST["_hide_name"];
+                    update_post_meta($post_id, "_hide_name", $hide_name, $hide_name_old);
+                    $hide_price = $_POST["_hide_price"];
+                    update_post_meta($post_id, "_hide_price", $hide_price, $hide_price_old);
+                    $custom_css = $_POST["_custom_css"];
+                    update_post_meta($post_id, "_custom_css", wp_kses_post($custom_css), $custom_css_old);
+                    $custom_css_old = get_post_meta($post_id, "_custom_css", true);
                     update_post_meta($post_id, 'zay_slider_item_price', $new_price_amount, $old_price_amount);
                     update_post_meta($post_id, 'zay_slider_item_price_name', $new_price_name, $old_price_name);
                     update_post_meta($post_id, 'zay_slider_item_creator_name', $new_crearor_name, $old_creator_name);
-                    update_post_meta($post_id, "_hide_title", $hide_title, $hide_title_old);
-                    update_post_meta($post_id, "_hide_image", $hide_image, $hide_image_old);
-                    update_post_meta($post_id, "_hide_price", $hide_price, $hide_price_old);
-                    update_post_meta($post_id, "_hide_name", $hide_name, $hide_name_old);
                 }
             }
             
-        } 
-
-
-        
+        }
         public function edit_item_post() {
                 
             if (isset($_POST['itemEditedSecurity'])){
