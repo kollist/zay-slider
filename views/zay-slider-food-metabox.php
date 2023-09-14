@@ -80,7 +80,7 @@
                                 <div class="item-author" data-hide="<?php echo $hide_name ?>" >
                                     <span><?php echo isset($creator_name) ? $creator_name : "" ?></span>
                                 </div>
-                                <div class="item-show-price" data-hide="<?php echo $hide_title ?>" >
+                                <div class="item-show-price" data-hide="<?php echo $hide_price ?>" >
                                     <span><?php echo isset($price_amount) ? $price_amount : "" ?></span>
                                     <span><?php echo isset($price_currency) ? $price_currency : "" ?></span>
                                 </div>
@@ -109,22 +109,29 @@
     </ul>
     <?php
     if ($post->post_status == 'publish'): 
-        
+        $active_tab = isset( $_GET[ "tab" ]) ? $_GET[ 'tab' ] : "main_options";
 ?>
 <div class="toggleMenu">
     <button class="button itemBtn button-default button-large"> <?php echo _e('Add New Item', 'zay-slider') ?> </button>
 </div>
-<div class="modal fade dialogMenuItem hide">
+<div class="modal fade dialogMenuItem hide" >
     <input type="hidden" name="zay_slider_nonce" class="zay_slider_nonce" value="<?php echo wp_create_nonce( "zay_slider_nonce" ); ?>">
-    <div class="modal-dialog modal-lg dialog">
+    <div class="modal-dialog modal-lg dialog" id="new_item">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title"><?php _e( 'Slider item' , 'zay-slider' ); ?></h4>
                 <button type="button" class="modal-button">&times;</button>
             </div>
-            <div class="modal-body">
-                <div class="row">
-
+            <div class="modal-body" id="tabs">
+                <ul class="nav-tab-wrapper">
+                    <li class="nav-tab">
+                        <a href="#new_item">Add New Item</a>
+                    </li>
+                    <li class="nav-tab">
+                        <a href="#accordion"> Design Item</a>
+                    </li>
+                </ul>
+                <div class="row" id="new_item">
                     <div class="col-xs-3">
                         <div class="edit-image">
                             <div class="uploader-upload">
@@ -137,40 +144,6 @@
                                 <button type="button" class="icon-delete">&times;</button>
                             </div>
                         </div>
-                        <table>
-                            <tr>
-                                <td>
-                                    <label for="_hide_title"> <?php _e("Hide Title", 'zay-slider') ?> </label>
-                                </td>
-                                <td>
-                                    <input type="checkbox" name="_hide_title" id="_hide_title" value="1" >
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="_hide_image"> <?php _e("Hide image", 'zay-slider') ?> </label>
-                                </td>
-                                <td>
-                                    <input type="checkbox" name="_hide_image" id="_hide_image" value="1" >
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="_hide_price"> <?php _e("Hide Price", 'zay-slider') ?> </label>
-                                </td>
-                                <td>
-                                    <input type="checkbox" name="_hide_price" id="_hide_price" value="1" >
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="_hide_name"> <?php _e("Hide Name", 'zay-slider') ?> </label>
-                                </td>
-                                <td>
-                                    <input type="checkbox" name="_hide_name" id="_hide_name" value="1" >
-                                </td>
-                            </tr>
-                        </table>
                     </div>
 
                     <div class="form-container">
@@ -209,7 +182,113 @@
                     </div>
 
                 </div>
-
+                <div class="row" id="accordion_design">
+                </div>
+                    <div id="accordion"> 
+                        <h3>
+                            <span class="dashicons dashicons-arrow-down"></span>
+                            Custom CSS
+                        </h3>
+                        <div>
+                            <div class="style title">
+                                <label for="_title_style">Title</label>
+                                <textarea name="_title_style" id="_title_style" cols="50" rows="10"></textarea>
+                            </div>
+                            <div class="style image">
+                                <label for="_image_style">Image</label>
+                                <textarea name="_image_style" id="_image_style" cols="50" rows="10"></textarea>
+                            </div>
+                            <div class="style price">
+                                <label for="_price_style">Price</label>
+                                <textarea name="_price_style" id="_price_style" cols="50" rows="10"></textarea>
+                            </div>
+                            <div class="style description">
+                                <label for="_description_style">Description</label>
+                                <textarea name="_description_style" id="_description_style" cols="50" rows="10"></textarea>
+                            </div>
+                            <div class="style author">
+                                <label for="_author_style">Author</label>
+                                <textarea name="_author_style" id="_author_style" cols="50" rows="10"></textarea>
+                            </div>
+                        </div>
+                        <h3>
+                            <span class="dashicons dashicons-arrow-down"></span>
+                            Visibility
+                        </h3>
+                        <div>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <?php _e("Hide Title", 'zay-slider') ?>
+                                    </td>
+                                    <td>
+                                        <button id="show" class="visibility-btn show-title">
+                                            <span class="dashicons dashicons-visibility"></span>
+                                        </button>
+                                        <button style="display: none;" id="hide" class="visibility-btn hide-title">
+                                            <span class="dashicons dashicons-hidden"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <?php _e("Hide image", 'zay-slider') ?>
+                                    </td>
+                                    <td>
+                                        <button id="show" class="visibility-btn show-image">
+                                            <span class="dashicons dashicons-visibility"></span>
+                                        </button>
+                                        <button style="display: none;" id="hide" class="visibility-btn hide-image">
+                                            <span class="dashicons dashicons-hidden"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?php _e("Hide Price", 'zay-slider') ?> 
+                                    </td>
+                                    <td>
+                                        <button id="show" class="visibility-btn show-price">
+                                            <span class="dashicons dashicons-visibility"></span>
+                                        </button>
+                                        <button style="display: none;" id="hide" class="visibility-btn hide-price" />
+                                            <span class="dashicons dashicons-hidden"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <?php _e("Hide Name", 'zay-slider') ?>
+                                    </td>
+                                    <td>
+                                        <button id="show" class="visibility-btn show-name">
+                                            <span class="dashicons dashicons-visibility"></span>
+                                        </button>
+                                        <button style="display: none;" id="hide" class="visibility-btn hide-name">
+                                            <span class="dashicons dashicons-hidden"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <h3>
+                            <span class="dashicons dashicons-arrow-down"></span>
+                            CSS ID & Classes
+                        </h3>
+                        <div>
+                            <div class="css-attributes css-id">
+                                <label for="_css_id">
+                                    CSS ID
+                                </label>
+                                <input type="text" id="_css_id" name="_css_id">
+                            </div>
+                            <div class="css-attributes css-class">
+                                <label for="_css_class">
+                                    CSS Class
+                                </label>
+                                <input type="text" id="_css_class" name="_css_class">
+                            </div>
+                        </div>
+                    </div>
             </div>
             <div class="modal-footer">
                 <button type="reset" class="button button-primary cancel-btn"><?php _e( 'Cancel' , 'zay-slider' ); ?></button>

@@ -1,0 +1,41 @@
+.custom-css .style{
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5em;
+    margin: 0 0 10px 10px;
+}
+
+.custom-css .style textarea {
+    background-color: #282828;
+    width: 70%;
+    color: white;
+    padding: 10px 0 0 10px;
+    border-radius: 3px;
+    margin-left: 10px;
+}
+
+.css-attributes {
+    padding: 10px 0 0 20px ;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.css-attributes label {
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+table.data-optional-displayer {
+    width: 100%;
+    margin-left: 10px;
+}
+table.data-optional-displayer tr {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #e2e2e2;
+    border-radius: 5px;
+    margin: 10px 0 ;
+}

@@ -4,6 +4,8 @@
         'post_status' => 'publish',
         'post__in' => $id,
     ));
+    
+    $slidesToShow = get_post_meta($id, "_slides_number", true);
 
     if ($post->have_posts()):
         while ($post->have_posts()):
@@ -37,7 +39,7 @@
             ));
             ?>
             <span class="dashicons dashicons-arrow-left-alt2" id='left'></span>
-            <div class="carousel" id="carousel">
+            <div class="carousel" id="carousel" style="gap: <?php echo $slidesToShow > 1 ? "10px" : "5px" ?>">
                 <?php
                     if ($post_items->have_posts()):
                         while($post_items->have_posts()):
@@ -49,14 +51,16 @@
                             $hide_image = get_post_meta(get_the_ID(), "_hide_image", true);
                             $hide_price = get_post_meta(get_the_ID(), "_hide_price", true);
                             $hide_name = get_post_meta(get_the_ID(), "_hide_name", true);
-                            $custom_css = get_post_meta(get_the_ID(), "_custom_css", true);
+                            $custom_title_css = get_post_meta(get_the_ID(), "_title_style", true);
+                            $custom_name_css = get_post_meta(get_the_ID(), "_author_style", true);
+                            $custom_price_css = get_post_meta(get_the_ID(), "_price_style", true);
+                            $custom_image_css = get_post_meta(get_the_ID(), "_image_style", true);
+                            $custom_description_css = get_post_meta(get_the_ID(), "_description_style", true);
+                            $custom_classes = get_post_meta(get_the_ID(), "_slide_custom_classes", true);
+                            $custom_id = get_post_meta(get_the_ID(), "_slide_custom_id", true);
                             ?>
-                            <style type="text/css">
-                                <?php echo esc_html($custom_css) ?>
-
-                            </style>
-                            <div id="item_<?php the_ID(); ?>" draggable="false" class="item-card swiper-slide ">
-                                <div class="item-card-img" style="display: <?php echo $hide_image == "1" ? "none" : "" ?> ;" >
+                            <div data-id="item_<?php the_ID(); ?>" id="<?php echo $custom_id  ?>" draggable="false" class="item-card swiper-slide <?php echo $custom_classes ?>">
+                                <div class="item-card-img" style="display: <?php echo $hide_image == "1" ? "none" : "" ?>;<?php echo $custom_image_css ?>" >
                                     <?php 
                                         if (! has_post_thumbnail() ) {
                                             echo wp_get_attachment_image(get_option('zayslider_default_image'), 'thumbnail'); 
@@ -65,19 +69,17 @@
                                     ?>
                                 </div>
                                 <div class="item-card-data">
-                                    <h5 class="item-card-title" style="display: <?php echo $hide_title == "1" ? "none" : "" ?> ;" ><?php the_title() ?> </h5>
-                                    <div class="item-card-price" style="display: <?php echo $hide_price == "1" ? "none" : "" ?> ;" >
+                                    <h5 class="item-card-title" style="display: <?php echo $hide_title == "1" ? "none" : "" ?>;<?php echo  $custom_title_css ?>" ><?php the_title() ?> </h5>
+                                    <div class="item-card-price" style="display: <?php echo $hide_price == "1" ? "none" : "" ?>;<?php echo $custom_price_css ?>" >
                                         <span class="price"> <?php echo $price ?> </span>
                                         <span class="price_name"> <?php echo $priceName ?> </span>
                                     </div>
                                 </div>
-                                <div class="item-card-description">
+                                <div class="item-card-description" style="<?php echo $custom_description_css ?>">
                                     <?php the_content(); ?>  
                                 </div>  
-                                <div class="item-author" style="display: <?php echo $creator_name == "" || $hide_name == "1" ? "none" : "block" ?>">
-                                    <span>
+                                <div class="item-author" style="display: <?php echo $creator_name == "" || $hide_name == "1" ? "none" : "" ?>;<?php echo $custom_name_css ?>">
                                         <?php echo $creator_name ?>
-                                    </span>
                                 </div>
                             </div>
                             <?php

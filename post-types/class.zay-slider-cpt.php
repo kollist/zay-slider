@@ -180,40 +180,73 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                 esc_html__("Optional dispalying", 'zay-slider'),
                 array($this, "meta_displayer"),
                 'zay-slider-item',
-                'normal'
+                'normal',
+                'high'
             );
             add_meta_box(
                 "zay_slider_item_custom_css",
                 esc_html("Slide Custom CSS", 'zay-slider'),
                 array($this, "item_custom_css"),
                 'zay-slider-item',
-                'normal'
+                'normal', 
+                'high'
+            );
+            add_meta_box(
+                'zay_slider_custom_attributes',
+                esc_html("Custom CSS Attributes", 'zay-slider'),
+                array($this, "item_css_attributes"),
+                'zay-slider-item',
+                'normal',
+                'high'
             );
         }
-        public function item_custom_css($post) {
-            $custom_css = get_post_meta(get_the_ID(), "_custom_css", true);
+        public function item_css_attributes($post) { 
+            $custom_classes = get_post_meta($post->ID, "_slide_custom_classes", true);
+            $custom_id = get_post_meta($post->ID, "_slide_custom_id", true);
             ?>
-                <div class="custom-css" style="display:flex; justify-content: space-between; align-items: center;">
-                    <div class="custom-css-area" style="display:flex; align-items: center; justify-content: space-around;">
-                        <label style="padding-right: 5px;" for="_custom_css"> <?php _e("Custom CSS", 'zay-slider') ?>  </label>
-                        <textarea name="_custom_css" id="_custom_css" cols="50" rows="10"> <?php echo isset($custom_css) ? $custom_css : ".carousel #item_$post->ID.item-card{}" ?> </textarea>
+            <div>
+                <div class="css-attributes css-id">
+                    <label for="_slide_custom_id">
+                        CSS ID
+                    </label>
+                    <input type="text" id="_slide_custom_id" name="_slide_custom_id" value="<?php echo isset($custom_classes) ? $custom_classes : "" ?>">
+                </div>
+                <div class="css-attributes css-class">
+                    <label for="_slide_custom_classes">
+                        CSS Class
+                    </label>
+                    <input type="text" id="_slide_custom_classes" name="_slide_custom_classes" value="<?php echo isset($custom_id) ? $custom_id : "" ?>">
+                </div>
+            </div>
+            <?php
+        }
+        public function item_custom_css($post) {
+            $custom_title_css = get_post_meta(get_the_ID(), "_title_style", true);
+            $custom_image_css = get_post_meta(get_the_ID(), "_image_style", true);
+            $custom_price_css = get_post_meta(get_the_ID(), "_price_style", true);
+            $custom_name_css = get_post_meta(get_the_ID(), "_author_style", true);
+            $custom_description_css = get_post_meta(get_the_ID(), "_description_style", true);
+            ?>
+                <div class="custom-css">
+                    <div class="style title">
+                        <label for="_title_style">Title</label>
+                        <textarea name="_title_style" id="_title_style" cols="50" rows="10"><?php echo isset($custom_title_css) ? $custom_title_css : ""  ?></textarea>
                     </div>
-                    <div class="custom-css-selectors" >
-                        <h4>The Used selectors: (copy the selector text to the textarea)</h4>
-                        <ul>
-                            <li>.carousel #item_<?php echo $post->ID ?>.item-card </li>
-                            <li>.carousel #item_<?php echo $post->ID ?> .item-card-img</li>
-                            <li>.carousel #item_<?php echo $post->ID ?> .item-card-img img</li>
-                            <li>.carousel #item_<?php echo $post->ID ?> .item-card-data</li>
-                            <li>.carousel #item_<?php echo $post->ID ?> .item-card-title</li>
-                            <li>.carousel #item_<?php echo $post->ID ?> .item-card-price</li>
-                            <li>.carousel #item_<?php echo $post->ID ?> .item-card-price span</li>
-                            <li>.carousel #item_<?php echo $post->ID ?> .item-card-price .price</li>
-                            <li>.carousel #item_<?php echo $post->ID ?> .item-card-price .price_name</li>
-                            <li>.carousel #item_<?php echo $post->ID ?> .item-card-description</li>
-                            <li>.carousel #item_<?php echo $post->ID ?> .item-author</li>
-                            <li>.carousel #item_<?php echo $post->ID ?> .item-author span</li>
-                        </ul>
+                    <div class="style image">
+                        <label for="_image_style">Image</label>
+                        <textarea name="_image_style" id="_image_style" cols="50" rows="10"><?php echo isset($custom_image_css) ? $custom_image_css : ""  ?></textarea>
+                    </div>
+                    <div class="style price">
+                        <label for="_price_style">Price</label>
+                        <textarea name="_price_style" id="_price_style" cols="50" rows="10"><?php echo isset($custom_price_css) ? $custom_price_css : ""  ?></textarea>
+                    </div>
+                    <div class="style description">
+                        <label for="_description_style">Description</label>
+                        <textarea name="_description_style" id="_description_style" cols="50" rows="10"><?php echo isset($custom_description_css) ? $custom_description_css : ""  ?></textarea>
+                    </div>
+                    <div class="style author">
+                        <label for="_author_style">Author</label>
+                        <textarea name="_author_style" id="_author_style" cols="50" rows="10"><?php echo isset($custom_name_css) ? $custom_name_css : ""  ?></textarea>
                     </div>
                 </div>
             <?php
@@ -224,7 +257,7 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
             $hide_price = get_post_meta($post->ID, "_hide_price", true);
             $hide_name = get_post_meta($post->ID, "_hide_name", true);
             ?>
-            <table>
+            <table class="data-optional-displayer">
                 <tr>
                     <td>
                         <label for="_hide_title"> <?php _e("Hide Title", 'zay-slider') ?> </label>
@@ -351,24 +384,53 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                     $old_price_name = get_post_meta($post_id, "zay_slider_item_price_name", true);
                     $new_crearor_name = $_POST["zay_slider_item_creator_name"];
                     $old_creator_name = get_post_meta($post_id, "zay_slider_item_creator_name", true);
+
                     $hide_title_old = get_post_meta($post_id, "_hide_title", true);
                     $hide_image_old = get_post_meta($post_id, "_hide_image", true);
                     $hide_price_old = get_post_meta($post_id, "_hide_price", true);
                     $hide_name_old = get_post_meta($post_id, "_hide_name", true);
+
                     $hide_title = $_POST[ "_hide_title"];
-                    update_post_meta($post_id, "_hide_title", $hide_title, $hide_title_old);
                     $hide_image = $_POST["_hide_image"  ];
-                    update_post_meta($post_id, "_hide_image", $hide_image, $hide_image_old);
                     $hide_name = $_POST["_hide_name"];
-                    update_post_meta($post_id, "_hide_name", $hide_name, $hide_name_old);
                     $hide_price = $_POST["_hide_price"];
-                    update_post_meta($post_id, "_hide_price", $hide_price, $hide_price_old);
-                    $custom_css = $_POST["_custom_css"];
-                    update_post_meta($post_id, "_custom_css", wp_kses_post($custom_css), $custom_css_old);
-                    $custom_css_old = get_post_meta($post_id, "_custom_css", true);
-                    update_post_meta($post_id, 'zay_slider_item_price', $new_price_amount, $old_price_amount);
-                    update_post_meta($post_id, 'zay_slider_item_price_name', $new_price_name, $old_price_name);
-                    update_post_meta($post_id, 'zay_slider_item_creator_name', $new_crearor_name, $old_creator_name);
+
+                    $slide_custom_classes = $_POST["_slide_custom_classes"];
+                    $slide_custom_id = $_POST["_slide_custom_id"];
+
+                    $old_custom_classes = get_post_meta($post_id, "_slide_custom_classes", true);
+                    $old_custom_id = get_post_meta($post_id, "_slide_custom_id", true);
+
+                    $custom_title_css = $_POST["_title_style"];
+                    $custom_name_css = $_POST["_author_style"];
+                    $custom_price_css = $_POST["_price_style"];
+                    $custom_image_css = $_POST["_image_style"];
+                    $custom_description_css = $_POST["_description_style"];
+
+                    $old_custom_title_css = get_post_meta($post_id, "_title_style", true);
+                    $old_custom_name_css = get_post_meta($post_id, "_author_style", true);
+                    $old_custom_price_css = get_post_meta($post_id, "_price_style", true);
+                    $old_custom_image_css = get_post_meta($post_id, "_image_style", true);
+                    $old_custom_description_css = get_post_meta($post_id, "_description_style", true);
+
+                    update_post_meta($post_id, "_slide_custom_classes", sanitize_text_field($slide_custom_classes), $old_custom_classes);
+                    update_post_meta($post_id, "_slide_custom_id", sanitize_text_field($slide_custom_id), $old_custom_id);
+
+                    update_post_meta($post_id, "_title_style", wp_kses_post($custom_title_css), $old_custom_title_css);
+                    update_post_meta($post_id, "_author_style", wp_kses_post($custom_name_css), $old_custom_name_css);
+                    update_post_meta($post_id, "_price_style", wp_kses_post($custom_price_css), $old_custom_price_css);
+                    update_post_meta($post_id, "_image_style", wp_kses_post($custom_image_css), $old_custom_image_css);
+                    update_post_meta($post_id, "_description_style", wp_kses_post($custom_description_css), $old_custom_description_css);
+
+                    update_post_meta($post_id, "_hide_title", sanitize_text_field($hide_title), $hide_title_old);
+                    update_post_meta($post_id, "_hide_image", sanitize_text_field($hide_image), $hide_image_old);
+                    update_post_meta($post_id, "_hide_name", sanitize_text_field($hide_name), $hide_name_old);
+                    update_post_meta($post_id, "_hide_price", sanitize_text_field($hide_price), $hide_price_old);
+
+                    update_post_meta($post_id, 'zay_slider_item_price', sanitize_text_field($new_price_amount), $old_price_amount);
+                    update_post_meta($post_id, 'zay_slider_item_price_name', sanitize_text_field($new_price_name), $old_price_name);
+
+                    update_post_meta($post_id, 'zay_slider_item_creator_name', sanitize_text_field($new_crearor_name), $old_creator_name);
                 }
             }
             
@@ -408,6 +470,15 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                 update_post_meta($postID, 'zay_slider_item_parent', sanitize_text_field($_POST['itemEditedParent_ID']));
                 update_post_meta($postID, 'zay_slider_item_creator_name', sanitize_text_field($_POST["itemEditedCreatorName"]));
             }
+            $hide_title = isset($_POST["itemEditedHideTitle"]) ? $_POST["itemEditedHideTitle"] : false;
+            $hide_image = isset($_POST["itemEditedHideImage"]) ? $_POST["itemEditedHideImage"] : false;
+            $hide_name = isset($_POST["itemEditedHideName"]) ? $_POST["itemEditedHideImage"] : false;
+            $hide_price = isset($_POST["itemEditedHidePrice"]) ? $_POST["itemEditedHideImage"] : false;
+
+            update_post_meta($postID, "_hide_title", $hide_title);
+            update_post_meta($postID, "_hide_image", $hide_image);
+            update_post_meta($postID, "_hide_name", $hide_name);
+            update_post_meta($postID, "_hide_price", $hide_price);
 
             wp_send_json_success(array(
                 'message' => __('Post Have Been Updated Succefully', 'zay-slider'),

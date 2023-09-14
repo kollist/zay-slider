@@ -1,6 +1,43 @@
 jQuery(document).ready(function($) {
 
+    $( "#tabs" ).tabs();
+
+    $("button.visibility-btn").click(function (e) {
+        e.preventDefault();
+        $(e.target).parent().children().each((i, ele) => {
+            if (e.target === ele){
+                $(ele).hide();
+            }else {
+                $(ele).show();
+            }
+        });
+    })
+
+    $( "#accordion" ).accordion({
+        collapsible: true,
+        active: false,
+    });
+
+    $("li.nav-tab").click(function (e){
+        let ul = $('.nav-tab-wrapper li ')
+        ul.each(function(index, li) {
+            $(li).removeClass("nav-tab-active");
+          });
+        $(e.target).closest("li").addClass("nav-tab-active");
+    })
+
     let anchorID = getQueryVariable('scroll_to')
+    
+    function getQueryVariable(variable) {
+        let query = window.location.search.substring(1);
+        let vars = query.split("&").map(ele => ele.split("="))
+        for(let i = 0; i < vars.length; i++){
+            if (vars[i][0] === variable){
+                return vars[i][1];            
+            }
+        }
+        
+    }
 
     if (anchorID) {
         var target = $('#' + anchorID);
@@ -9,17 +46,6 @@ jQuery(document).ready(function($) {
             scrollTop: target.offset().top
           }, 800);
         }
-    }
-
-    function getQueryVariable(variable) {
-        let query = window.location.search.substring(1);
-        let vars = query.split("&").map(ele => ele.split("="))
-        let anchorID;
-        for(let i = 0; i < vars.length; i++){
-            if (vars[i][0] === variable){
-                return vars[i][1];            }
-        }
-        
     }
 
 
@@ -46,10 +72,20 @@ jQuery(document).ready(function($) {
 
         $(".show-thumb").data("hide");
 
-        $("#_hide_title").prop("checked", $(".item-show-info h4").data("hide") == "1" ? true : false);
-        $("#_hide_image").prop("checked", $(".show-thumb").data("hide") == "1" ? true : false);
-        $("#_hide_name").prop("checked", $(".item-show-info .item-author").data("hide") == "1" ? true : false);
-        $("#_hide_price").prop("checked", $(".item-show-price").data("hide") == "1" ? true : false);
+        console.log($(".modal-dialog").data("id"));
+
+        $(".hide-title").css("display", $("li#"+$(".modal-dialog").data("id")+" .item-show-info h4").data("hide") == "1" ? "block" : "none");
+        $(".hide-image").css("display", $("li#"+$(".modal-dialog").data("id")+" .show-thumb").data("hide") == "1" ? "block" : "none");
+        $(".hide-name").css("display", $("li#"+$(".modal-dialog").data("id")+" .item-show-info .item-author").data("hide") == "1" ? "block" : "none");
+        $(".hide-price").css("display", $("li#"+$(".modal-dialog").data("id")+" .item-show-price").data("hide") == "1" ? "block" : "none");
+
+        $(".show-title").css("display", $("li#"+$(".modal-dialog").data("id")+" .item-show-info h4").data("hide") == "1" ? "none" : "block");
+        $(".show-image").css("display", $("li#"+$(".modal-dialog").data("id")+" .show-thumb").data("hide") == "1" ? "none" : "block");
+        $(".show-name").css("display", $("li#"+$(".modal-dialog").data("id")+" .item-show-info .item-author").data("hide") == "1" ? "none" : "block");
+        $(".show-price").css("display", $("li#"+$(".modal-dialog").data("id")+" .item-show-price").data("hide") == "1" ? "none" : "block");
+
+
+        console.log($("li#"+$(".modal-dialog").data("id")+" .item-show-info h4").data("hide"));
 
         $('#itemTitle').val(informations[0]);
         if (typeof tinymce !== 'undefined') {
@@ -137,6 +173,10 @@ jQuery(document).ready(function($) {
         editedData.append("itemEditedPriceName",  $('.item-price').attr('.hidePrice') ? '' : $('.priceName').val());
         editedData.append("itemEditedCreatorName",  $('.item-creator-name').attr('.hideCreator') ? '' : $('#zay_slider_item_creator_name').val());
         editedData.append("action", 'edit_item_post');
+        editedData.append("itemEditedHideTitle", $(".hide-title#hide").css("display") == 'block' && "1")
+        editedData.append("itemEditedHideImage", $(".hide-image#hide").css("display") == "block"  && "1")
+        editedData.append("itemEditedHideName", $(".hide-name#hide").css("display") == "block" && "1")
+        editedData.append("itemEditedHidePrice", $(".hide-price#hide").css("display") == "block" && "1")
 
         $.ajax({
             url: ZAY_FRONT.ajaxurl,
@@ -150,14 +190,27 @@ jQuery(document).ready(function($) {
                 if (res.success){
                     doClick(e);
                     $("#"+editedData.get("itemEditedID")+' .item-show-info h4').html(editedData.get('itemEditedTitle'));  
+                    $("#"+editedData.get("itemEditedID")+' .item-show-info h4').data("hide", editedData.get("itemEditedHideTitle"))
                     $("#"+editedData.get("itemEditedID")+" .item-show-desc").html(editedData.get('itemEditedContent'))
                     $("#"+editedData.get("itemEditedID")+' .item-show-price span:first').html(editedData.get('itemEditedPriceAmount'));
                     $("#"+editedData.get("itemEditedID")+' .item-show-price span:last').html(editedData.get('itemEditedPriceName'));
+                    $("#"+editedData.get("itemEditedID")+' .item-show-price').data("hide", editedData.get("itemEditedHidePrice"));
                     $("#"+editedData.get("itemEditedID")+' .item-author span').html(editedData.get('itemEditedCreatorName'));
+                    $("#"+editedData.get("itemEditedID")+' .item-author').data("hide", editedData.get("itemEditedHideName"))
+                    $("#"+editedData.get("itemEditedID")+" .show-thumb").data("hide", editedData.get("itemEditedHideImage"))
                     let src = editedData.get('itemEditedThumbnail') ? editedData.get('itemEditedThumbnail') : `${document.location.origin}/wp-content/uploads/zayslider-default-100x100.jpeg`;
                     let img = $("#"+editedData.get("itemEditedID")+" img");
                     img.attr('src', src);
                     img.attr('srcset', "");
+                    $("#"+$(".modal-dialog").attr("id")+" .hide-title").css("display", editedData.get("itemEditedHideTitle") == "1" ? "block" : "none");
+                    $("#"+$(".modal-dialog").attr("id")+" .hide-image").css("display", editedData.get("itemEditedHideImage") == "1" ? "block" : "none");
+                    $("#"+$(".modal-dialog").attr("id")+" .hide-name").css("display", editedData.get("itemEditedHideName") == "1" ? "block" : "none");
+                    $("#"+$(".modal-dialog").attr("id")+" .hide-price").css("display", editedData.get("itemEditedHidePrice") == "1" ? "block" : "none");
+            
+                    $("#"+$(".modal-dialog").attr("id")+" .show-title").css("display", editedData.get("itemEditedHideTitle") == "1" ? "none" : "block");
+                    $("#"+$(".modal-dialog").attr("id")+" .show-image").css("display", editedData.get("itemEditedHideImage") == "1" ? "none" : "block");
+                    $("#"+$(".modal-dialog").attr("id")+" .show-name").css("display", editedData.get("itemEditedHideName") == "1" ? "none" : "block");
+                    $("#"+$(".modal-dialog").attr("id")+" .show-price").css("display", editedData.get("itemEditedHidePrice") == "1" ? "none" : "block");
                 }
             },
             error: function (xhr) {
@@ -215,7 +268,9 @@ jQuery(document).ready(function($) {
 
     $('#sortable').sortable({
         start: function (e, ui) {
-            ui.item.addClass('custom-cursor')
+            ui.item.addClass('custom-cursor');
+            $("#ac");
+            
         },
         stop: function(event, ui) {
             var sortedData = $(this).sortable('toArray', {attribute: 'id'});
@@ -293,10 +348,18 @@ jQuery(document).ready(function($) {
             $(".edit-btn").hide();
             $(".save-btn").show();
 
-            $("#_hide_title").prop("checked", false);
-            $("#_hide_image").prop("checked", false);
-            $("#_hide_name").prop("checked", false);
-            $("#_hide_price").prop("checked", false);
+            $(".hide-title").css("display", "none");
+            $(".hide-image").css("display", "none");
+            $(".hide-name").css("display", "none");
+            $(".hide-price").css("display", "none");
+            $(".show-title").css("display", "block");
+            $(".show-image").css("display", "block");
+            $(".show-name").css("display", "block");
+            $(".show-price").css("display", "block");
+
+
+            (".nav-tab-wrapper li").first().addClass("nav-tab-active")
+            $(".nav-tab-wrapper li").last().removeClass("nav-tab-active")
     }
     $('.cancel-btn').click(doClick);
     $('.modal-button').click(doClick);
@@ -352,10 +415,10 @@ jQuery(document).ready(function($) {
         postData.append("itemPriceName",  $('.item-price').attr('.hidePrice') ? '' : $('.priceName').val());
         postData.append('creatorName', $('item-creator-name').attr("hideCreator") ? "" : $('#zay_slider_item_creator_name').val())
         postData.append("action", 'submit_cpt');
-        postData.append("_hide_title", $("#_hide_title")[0].checked && "1")
-        postData.append("_hide_image", $("#_hide_image")[0].checked && "1")
-        postData.append("_hide_name", $("#_hide_name")[0].checked && "1")
-        postData.append("_hide_price", $("#_hide_price")[0].checked && "1")
+        postData.append("_hide_title", $(".hide-title#hide").css("display") == 'block' && "1")
+        postData.append("_hide_image", $(".hide-image#hide").css("display") == "block"  && "1")
+        postData.append("_hide_name", $(".hide-price#hide").css("display") == "block" && "1")
+        postData.append("_hide_price", $(".hide-name#hide").css("display") == "block" && "1")
         $.ajax({
             url: ZAY_FRONT.ajaxurl,
             action: 'zay-slider-jq',
@@ -368,7 +431,7 @@ jQuery(document).ready(function($) {
                 if (res.status == 'success'){
                     let element = $('<li>', {
                         id: res.id,
-                        class: 'menu-item',
+                        class: 'menu-item ui-sortable-handle',
                       }).html(`
                         <div class="show-data">      
                           <div class="show-thumb" data-hide="${postData.get("_hide_image")}">
