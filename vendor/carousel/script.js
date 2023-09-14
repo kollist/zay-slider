@@ -58,7 +58,7 @@ if (showBullets){
 }
 
 allItems.forEach((item, index) => {
-    item.style.width = `calc(100% / ${itemsOnSlide} - 5px) !important`;
+    item.style.width = `calc(100% / ${itemsOnSlide} - 5px)`;
 });
 
 const showHideIcons = () => {
