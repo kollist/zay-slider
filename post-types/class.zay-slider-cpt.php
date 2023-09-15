@@ -475,10 +475,26 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
             $hide_name = isset($_POST["itemEditedHideName"]) ? $_POST["itemEditedHideImage"] : false;
             $hide_price = isset($_POST["itemEditedHidePrice"]) ? $_POST["itemEditedHideImage"] : false;
 
+            $_title_style = $_POST["_title_style"];
+            $_author_style = $_POST["_author_style"];
+            $_price_style = $_POST["_price_style"];
+            $_image_style = $_POST["_image_style"];
+            $_description_style = $_POST["_description_style"];
+            $custom_class = $_POST["_slide_custom_classes"];
+            $custom_id = $_POST["_slide_custom_id"];
+
             update_post_meta($postID, "_hide_title", $hide_title);
             update_post_meta($postID, "_hide_image", $hide_image);
             update_post_meta($postID, "_hide_name", $hide_name);
             update_post_meta($postID, "_hide_price", $hide_price);
+
+            update_post_meta($postID, "_title_style", $_title_style);
+            update_post_meta($postID, "_author_style", $_author_style);
+            update_post_meta($postID, "_price_style", $_price_style);
+            update_post_meta($postID, "_image_style", $_image_style);
+            update_post_meta($postID, "_description_style", $_description_style);
+            update_post_meta($postID, "_slide_custom_classes", $custom_class);
+            update_post_meta($postID, "_slide_custom_id", $custom_id);
 
             wp_send_json_success(array(
                 'message' => __('Post Have Been Updated Succefully', 'zay-slider'),
@@ -548,6 +564,20 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                 $hide_price_old = get_post_meta($item_id, "_hide_price", true);
                 $hide_name = $_POST["_hide_name"];
                 $hide_name_old = get_post_meta($item_id, "_hide_name", true);
+                $_title_style = $_POST["_title_style"];
+                $_author_style = $_POST["_author_style"];
+                $_price_style = $_POST["_price_style"];
+                $_image_style = $_POST["_image_style"];
+                $_description_style = $_POST["_description_style"];
+                $custom_class = $_POST["_slide_custom_classes"];
+                $custom_id = $_POST["_slide_custom_id"];
+                $_old_title_style = get_post_meta($item_id, "_title_style", true);
+                $_old_author_style = get_post_meta($item_id, "_author_style", true);
+                $_old_price_style = get_post_meta($item_id, "_price_style", true);
+                $_old_image_style = get_post_meta($item_id, "_image_style", true);
+                $_old_description_style = get_post_meta($item_id, "_description_style", true);
+                $_old_custom_classes = get_post_meta($item_id, "_slide_custom_classes", true);
+                $_old_custom_id = get_post_meta($item_id, "_slide_custom_id", true);
                 update_post_meta($item_id, 'zay_slider_item_price', $new_price_amount, $old_price_amount);
                 update_post_meta($item_id, 'zay_slider_item_price_name', $new_price_name, $old_price_name);
                 update_post_meta($item_id, 'zay_slider_item_parent', $new_parent_id, $old_parent_id);
@@ -556,6 +586,13 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                 update_post_meta($item_id, "_hide_image", $hide_image, $hide_image_old);
                 update_post_meta($item_id, "_hide_price", $hide_price, $hide_price_old);
                 update_post_meta($item_id, "_hide_name", $hide_name, $hide_name_old);
+                update_post_meta($item_id, "_title_style", $_title_style, $_old_title_style);
+                update_post_meta($item_id, "_author_style", $_author_style , $_old_author_style);
+                update_post_meta($item_id, "_price_style", $_price_style, $_old_price_style);
+                update_post_meta($item_id, "_image_style", $_image_style, $_old_image_style);
+                update_post_meta($item_id, "_description_style", $_description_style, $_old_description_style);
+                update_post_meta($item_id, "_slide_custom_classes", $custom_class, $_old_custom_classes);
+                update_post_meta($item_id, "_slide_custom_id", $custom_id, $_old_custom_id);
             }
             if ($response){
                 wp_send_json($response);

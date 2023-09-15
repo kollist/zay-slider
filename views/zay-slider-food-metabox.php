@@ -184,111 +184,110 @@
                 </div>
                 <div class="row" id="accordion_design">
                 </div>
-                    <div id="accordion"> 
-                        <h3>
-                            <span class="dashicons dashicons-arrow-down"></span>
-                            Custom CSS
-                        </h3>
-                        <div>
-                            <div class="style title">
-                                <label for="_title_style">Title</label>
-                                <textarea name="_title_style" id="_title_style" cols="50" rows="10"></textarea>
-                            </div>
-                            <div class="style image">
-                                <label for="_image_style">Image</label>
-                                <textarea name="_image_style" id="_image_style" cols="50" rows="10"></textarea>
-                            </div>
-                            <div class="style price">
-                                <label for="_price_style">Price</label>
-                                <textarea name="_price_style" id="_price_style" cols="50" rows="10"></textarea>
-                            </div>
-                            <div class="style description">
-                                <label for="_description_style">Description</label>
-                                <textarea name="_description_style" id="_description_style" cols="50" rows="10"></textarea>
-                            </div>
-                            <div class="style author">
-                                <label for="_author_style">Author</label>
-                                <textarea name="_author_style" id="_author_style" cols="50" rows="10"></textarea>
-                            </div>
+                <div id="accordion"> 
+                    <h3>
+                        <span class="dashicons dashicons-arrow-down"></span>
+                        Custom CSS
+                    </h3>
+                    <div>
+                        <div class="style title">
+                            <label for="_title_style">Title</label>
+                            <textarea name="_title_style" id="_title_style" cols="50" rows="10"></textarea>
                         </div>
-                        <h3>
-                            <span class="dashicons dashicons-arrow-down"></span>
-                            Visibility
-                        </h3>
-                        <div>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <?php _e("Hide Title", 'zay-slider') ?>
-                                    </td>
-                                    <td>
-                                        <button id="show" class="visibility-btn show-title">
-                                            <span class="dashicons dashicons-visibility"></span>
-                                        </button>
-                                        <button style="display: none;" id="hide" class="visibility-btn hide-title">
-                                            <span class="dashicons dashicons-hidden"></span>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <?php _e("Hide image", 'zay-slider') ?>
-                                    </td>
-                                    <td>
-                                        <button id="show" class="visibility-btn show-image">
-                                            <span class="dashicons dashicons-visibility"></span>
-                                        </button>
-                                        <button style="display: none;" id="hide" class="visibility-btn hide-image">
-                                            <span class="dashicons dashicons-hidden"></span>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><?php _e("Hide Price", 'zay-slider') ?> 
-                                    </td>
-                                    <td>
-                                        <button id="show" class="visibility-btn show-price">
-                                            <span class="dashicons dashicons-visibility"></span>
-                                        </button>
-                                        <button style="display: none;" id="hide" class="visibility-btn hide-price" />
-                                            <span class="dashicons dashicons-hidden"></span>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <?php _e("Hide Name", 'zay-slider') ?>
-                                    </td>
-                                    <td>
-                                        <button id="show" class="visibility-btn show-name">
-                                            <span class="dashicons dashicons-visibility"></span>
-                                        </button>
-                                        <button style="display: none;" id="hide" class="visibility-btn hide-name">
-                                            <span class="dashicons dashicons-hidden"></span>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </table>
+                        <div class="style image">
+                            <label for="_image_style">Image</label>
+                            <textarea name="_image_style" id="_image_style" cols="50" rows="10"></textarea>
                         </div>
-                        <h3>
-                            <span class="dashicons dashicons-arrow-down"></span>
-                            CSS ID & Classes
-                        </h3>
-                        <div>
-                            <div class="css-attributes css-id">
-                                <label for="_css_id">
-                                    CSS ID
-                                </label>
-                                <input type="text" id="_css_id" name="_css_id">
-                            </div>
-                            <div class="css-attributes css-class">
-                                <label for="_css_class">
-                                    CSS Class
-                                </label>
-                                <input type="text" id="_css_class" name="_css_class">
-                            </div>
+                        <div class="style price">
+                            <label for="_price_style">Price</label>
+                            <textarea name="_price_style" id="_price_style" cols="50" rows="10"></textarea>
+                        </div>
+                        <div class="style description">
+                            <label for="_description_style">Description</label>
+                            <textarea name="_description_style" id="_description_style" cols="50" rows="10"></textarea>
+                        </div>
+                        <div class="style author">
+                            <label for="_author_style">Author</label>
+                            <textarea name="_author_style" id="_author_style" cols="50" rows="10"></textarea>
                         </div>
                     </div>
+                    <h3>
+                        <span class="dashicons dashicons-arrow-down"></span>
+                        Visibility
+                    </h3>
+                    <div>
+                        <table>
+                            <tr>
+                                <td>
+                                    <?php _e("Hide Title", 'zay-slider') ?>
+                                </td>
+                                <td>
+                                    <button id="show" class="visibility-btn show-title">
+                                        <span class="dashicons dashicons-visibility"></span>
+                                    </button>
+                                    <button style="display: none;" id="hide" class="visibility-btn hide-title">
+                                        <span class="dashicons dashicons-hidden"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <?php _e("Hide image", 'zay-slider') ?>
+                                </td>
+                                <td>
+                                    <button id="show" class="visibility-btn show-image">
+                                        <span class="dashicons dashicons-visibility"></span>
+                                    </button>
+                                    <button style="display: none;" id="hide" class="visibility-btn hide-image">
+                                        <span class="dashicons dashicons-hidden"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><?php _e("Hide Price", 'zay-slider') ?> </td>
+                                <td>
+                                    <button id="show" class="visibility-btn show-price">
+                                        <span class="dashicons dashicons-visibility"></span>
+                                    </button>
+                                    <button style="display: none;" id="hide" class="visibility-btn hide-price" />
+                                        <span class="dashicons dashicons-hidden"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <?php _e("Hide Name", 'zay-slider') ?>
+                                </td>
+                                <td>
+                                    <button id="show" class="visibility-btn show-name">
+                                        <span class="dashicons dashicons-visibility"></span>
+                                    </button>
+                                    <button style="display: none;" id="hide" class="visibility-btn hide-name">
+                                        <span class="dashicons dashicons-hidden"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h3>
+                        <span class="dashicons dashicons-arrow-down"></span>
+                        CSS ID & Classes
+                    </h3>
+                    <div>
+                        <div class="css-attributes css-id">
+                            <label for="_css_id">
+                                CSS ID
+                            </label>
+                            <input type="text" id="_css_id" name="_css_id">
+                        </div>
+                        <div class="css-attributes css-class">
+                            <label for="_css_class">
+                                CSS Class
+                            </label>
+                            <input type="text" id="_css_class" name="_css_class">
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="reset" class="button button-primary cancel-btn"><?php _e( 'Cancel' , 'zay-slider' ); ?></button>

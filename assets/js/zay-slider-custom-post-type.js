@@ -72,20 +72,32 @@ jQuery(document).ready(function($) {
 
         $(".show-thumb").data("hide");
 
-        console.log($(".modal-dialog").data("id"));
+        let itemID = $(".modal-dialog").data("id");
 
-        $(".hide-title").css("display", $("li#"+$(".modal-dialog").data("id")+" .item-show-info h4").data("hide") == "1" ? "block" : "none");
-        $(".hide-image").css("display", $("li#"+$(".modal-dialog").data("id")+" .show-thumb").data("hide") == "1" ? "block" : "none");
-        $(".hide-name").css("display", $("li#"+$(".modal-dialog").data("id")+" .item-show-info .item-author").data("hide") == "1" ? "block" : "none");
-        $(".hide-price").css("display", $("li#"+$(".modal-dialog").data("id")+" .item-show-price").data("hide") == "1" ? "block" : "none");
+        $(".hide-title").css("display", $("li#"+itemID+" .item-show-info h4").data("hide") == "1" ? "block" : "none");
+        $(".hide-image").css("display", $("li#"+itemID+" .show-thumb").data("hide") == "1" ? "block" : "none");
+        $(".hide-name").css("display", $("li#"+itemID+" .item-show-info .item-author").data("hide") == "1" ? "block" : "none");
+        $(".hide-price").css("display", $("li#"+itemID+" .item-show-price").data("hide") == "1" ? "block" : "none");
 
-        $(".show-title").css("display", $("li#"+$(".modal-dialog").data("id")+" .item-show-info h4").data("hide") == "1" ? "none" : "block");
-        $(".show-image").css("display", $("li#"+$(".modal-dialog").data("id")+" .show-thumb").data("hide") == "1" ? "none" : "block");
-        $(".show-name").css("display", $("li#"+$(".modal-dialog").data("id")+" .item-show-info .item-author").data("hide") == "1" ? "none" : "block");
-        $(".show-price").css("display", $("li#"+$(".modal-dialog").data("id")+" .item-show-price").data("hide") == "1" ? "none" : "block");
+        $(".show-title").css("display", $("li#"+itemID+" .item-show-info h4").data("hide") == "1" ? "none" : "block");
+        $(".show-image").css("display", $("li#"+itemID+" .show-thumb").data("hide") == "1" ? "none" : "block");
+        $(".show-name").css("display", $("li#"+itemID+" .item-show-info .item-author").data("hide") == "1" ? "none" : "block");
+        $(".show-price").css("display", $("li#"+itemID+" .item-show-price").data("hide") == "1" ? "none" : "block");
 
 
-        console.log($("li#"+$(".modal-dialog").data("id")+" .item-show-info h4").data("hide"));
+        let storedData = JSON.parse(localStorage.getItem("item_"+itemID));
+
+
+        if (storedData){
+            $("#_title_style").text(storedData.title_style);
+            $("#_author_style").text(storedData.author_style);
+            $("#_price_style").text(storedData.price_style);
+            $("#_image_style").text(storedData.image_style);
+            $("#_description_style").text(storedData.description_style);
+            $("#_css_class").val(storedData._css_class);
+            $("#_css_id").val(storedData._css_id);
+        }
+
 
         $('#itemTitle').val(informations[0]);
         if (typeof tinymce !== 'undefined') {
@@ -177,7 +189,13 @@ jQuery(document).ready(function($) {
         editedData.append("itemEditedHideImage", $(".hide-image#hide").css("display") == "block"  && "1")
         editedData.append("itemEditedHideName", $(".hide-name#hide").css("display") == "block" && "1")
         editedData.append("itemEditedHidePrice", $(".hide-price#hide").css("display") == "block" && "1")
-
+        postData.append("_title_style", $("#_title_style").val());
+        postData.append("_author_style", $("#_author_style").val());
+        postData.append("_price_style", $("#_price_style").val());
+        postData.append("_image_style", $("#_image_style").val());
+        postData.append("_description_style", $("#_description_style").val());
+        postData.append("_slide_custom_classes", $("#_css_class").val());
+        postData.append("_slide_custom_id", $("#_css_id").val());
         $.ajax({
             url: ZAY_FRONT.ajaxurl,
             action: 'zay-slider-jq',
@@ -243,6 +261,7 @@ jQuery(document).ready(function($) {
             processData: false,
             success: function (res) {
                 console.log(res);
+                localStorage.removeItem("item_"+postID);
                 theDialog.dialog('close');
                 post.fadeOut( function(){
                     post.remove();
@@ -263,7 +282,6 @@ jQuery(document).ready(function($) {
         e.preventDefault()
         let id = $(e.target).closest("li").attr('id');
         theDialog.data('deletedID', id).dialog('open');
-
     });
 
     $('#sortable').sortable({
@@ -358,8 +376,18 @@ jQuery(document).ready(function($) {
             $(".show-price").css("display", "block");
 
 
-            (".nav-tab-wrapper li").first().addClass("nav-tab-active")
+            $(".nav-tab-wrapper li").first().addClass("nav-tab-active")
             $(".nav-tab-wrapper li").last().removeClass("nav-tab-active")
+
+            // $("#tabs").tabs("option", "active", "#new_item");
+
+            $("#_title_style").val("");
+            $("#_author_style").val("");
+            $("#_price_style").val("");
+            $("#_image_style").val("");
+            $("#_description_style").val("");
+            $("#_css_class").val("");
+            $("#_css_id").val("");
     }
     $('.cancel-btn').click(doClick);
     $('.modal-button').click(doClick);
@@ -419,6 +447,13 @@ jQuery(document).ready(function($) {
         postData.append("_hide_image", $(".hide-image#hide").css("display") == "block"  && "1")
         postData.append("_hide_name", $(".hide-price#hide").css("display") == "block" && "1")
         postData.append("_hide_price", $(".hide-name#hide").css("display") == "block" && "1")
+        postData.append("_title_style", $("#_title_style").val());
+        postData.append("_author_style", $("#_author_style").val());
+        postData.append("_price_style", $("#_price_style").val());
+        postData.append("_image_style", $("#_image_style").val());
+        postData.append("_description_style", $("#_description_style").val());
+        postData.append("_slide_custom_classes", $("#_css_class").val());
+        postData.append("_slide_custom_id", $("#_css_id").val());
         $.ajax({
             url: ZAY_FRONT.ajaxurl,
             action: 'zay-slider-jq',
@@ -429,6 +464,16 @@ jQuery(document).ready(function($) {
             processData: false,
             success: function (res) {
                 if (res.status == 'success'){
+                    let dataStored = JSON.stringify({
+                        "title_style": $("#_title_style").val(),
+                        "author_style": $("#_author_style").val(),
+                        "price_style": $("#_price_style").val(),
+                        "image_style": $("#_image_style").val(),
+                        "description_style": $("#_description_style").val(),
+                        "_css_class": $("#_css_class").val(),
+                        "_css_id": $("#_css_id").val()
+                    });
+                    localStorage.setItem("item_"+res.id, dataStored);                    
                     let element = $('<li>', {
                         id: res.id,
                         class: 'menu-item ui-sortable-handle',
