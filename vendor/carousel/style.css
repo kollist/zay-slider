@@ -61,6 +61,7 @@
   user-select: none;
   flex-grow: 0;
   flex-shrink: 0;
+  position: relative;
 }
 
 .items-wrapper .pagination {
