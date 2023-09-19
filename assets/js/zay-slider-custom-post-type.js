@@ -4,7 +4,7 @@ jQuery(document).ready(function($) {
 
     $("button.visibility-btn").click(function (e) {
         e.preventDefault();
-        $(e.target).parent().children().each((i, ele) => {
+        $(e.target).parent().children("button").each((i, ele) => {
             if (e.target === ele){
                 $(ele).hide();
             }else {
@@ -189,13 +189,13 @@ jQuery(document).ready(function($) {
         editedData.append("itemEditedHideImage", $(".hide-image#hide").css("display") == "block"  && "1")
         editedData.append("itemEditedHideName", $(".hide-name#hide").css("display") == "block" && "1")
         editedData.append("itemEditedHidePrice", $(".hide-price#hide").css("display") == "block" && "1")
-        postData.append("_title_style", $("#_title_style").val());
-        postData.append("_author_style", $("#_author_style").val());
-        postData.append("_price_style", $("#_price_style").val());
-        postData.append("_image_style", $("#_image_style").val());
-        postData.append("_description_style", $("#_description_style").val());
-        postData.append("_slide_custom_classes", $("#_css_class").val());
-        postData.append("_slide_custom_id", $("#_css_id").val());
+        editedData.append("_title_style", $("#_title_style").val());
+        editedData.append("_author_style", $("#_author_style").val());
+        editedData.append("_price_style", $("#_price_style").val());
+        editedData.append("_image_style", $("#_image_style").val());
+        editedData.append("_description_style", $("#_description_style").val());
+        editedData.append("_slide_custom_classes", $("#_css_class").val());
+        editedData.append("_slide_custom_id", $("#_css_id").val());
         $.ajax({
             url: ZAY_FRONT.ajaxurl,
             action: 'zay-slider-jq',
@@ -333,7 +333,7 @@ jQuery(document).ready(function($) {
             );
             $('.dialogMenuItem').removeClass('hide')
             
-        });
+    });
         function doClick(e){
             e.preventDefault();
 

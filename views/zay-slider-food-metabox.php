@@ -114,26 +114,36 @@
 <div class="toggleMenu">
     <button class="button itemBtn button-default button-large"> <?php echo _e('Add New Item', 'zay-slider') ?> </button>
 </div>
-<div class="modal fade dialogMenuItem hide" >
+<div class="dialogMenuItem hide" >
     <input type="hidden" name="zay_slider_nonce" class="zay_slider_nonce" value="<?php echo wp_create_nonce( "zay_slider_nonce" ); ?>">
-    <div class="modal-dialog modal-lg dialog" id="new_item">
+    <div class="dialog" id="new_item">
         <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title"><?php _e( 'Slider item' , 'zay-slider' ); ?></h4>
-                <button type="button" class="modal-button">&times;</button>
-            </div>
+            
             <div class="modal-body" id="tabs">
-                <ul class="nav-tab-wrapper">
-                    <li class="nav-tab">
-                        <a href="#new_item">Add New Item</a>
-                    </li>
-                    <li class="nav-tab">
-                        <a href="#accordion"> Design Item</a>
-                    </li>
-                </ul>
+                <div class="nav">
+                    <ul class="nav-tab-wrapper">
+                        <li class="nav-tab">
+                            <a href="#new_item">Add New Item <span class="dashicons dashicons-plus"></span></a>
+                            
+                        </li>
+                        <li class="nav-tab">
+                            <a href="#accordion"> Design Item   <span class="dashicons dashicons-art"></span></a>
+                        </li>
+                    </ul>
+                    <button type="button" class="modal-button">&times;</button>
+                </div>
+                <div class="modal-header">
+                    <h4 class="modal-title"><?php _e( 'Slider item' , 'zay-slider' ); ?></h4>
+                </div> 
                 <div class="row" id="new_item">
                     <div class="col-xs-3">
                         <div class="edit-image">
+                            <button id="show" class="visibility-btn show-image">
+                                <span class="dashicons dashicons-visibility"></span>
+                            </button>
+                            <button style="display: none;" id="hide" class="visibility-btn hide-image">
+                                <span class="dashicons dashicons-hidden"></span>
+                            </button>
                             <div class="uploader-upload">
                                 <div>
                                     <button class="button button-default" id="upload_image_button"><?php _e('Select Image', 'zay-slider'); ?></button>
@@ -145,44 +155,61 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="form-container">
                         <div class="form-group">
-                            <label for="itemTitle" ><?php _ex('Title','modal window','zay-slider'); ?></label>
-                            <input type="text" id="itemTitle" class="form-control item-title" value="<?php _e('Item Title', 'zay-slider') ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="<?php echo $editor_id ?>"><?php _ex('Description','modal window', 'zay-slider'); ?></label>
-                            <div class="modal-texteditor">
-                                <?php wp_editor($content, $editor_id, $settings); ?>
+                            <label for="itemTitle" ><?php _e('Title', 'zay-slider'); ?> :</label>
+                            <div class="inputs">
+                                <input type="text" id="itemTitle" class="form-control item-title" placeholder="<?php _e("Slide Title", 'zay-slider') ?>" value="<?php _e('Item Title', 'zay-slider') ?>">
+                                <button id="show" class="visibility-btn show-title">
+                                    <span class="dashicons dashicons-visibility"></span>
+                                </button>
+                                <button style="display: none;" id="hide" class="visibility-btn hide-title">
+                                    <span class="dashicons dashicons-hidden"></span>
+                                </button>
                             </div>
                         </div>
-                        <div class="form-group price-form" >
-                                        <label><?php _e('Price','zay-slider'); ?></label>
-                                        <div class="edit-price">
-                                            <div class="item-price hidePrice">
-                                                <input id="zay_slider_item_price" name='zay_slider_item_price' class="priceAmount" placeholder="<?php _e('Price', 'zay-slider'); ?>"  >
-                                                <input id="zay_slider_item_price_name" name="zay_slider_item_price_name" class="priceName" placeholder="<?php _e('Title', 'zay-slider'); ?>"  >
-                                                <button type="button" class="rmvPrice">&times;</button>
-                                            </div>
-                                            <span id="errorMessage" class="errorMessage hide">You can't have a price name without a price</span>
-                                            <button  class="add-price button button-default" ><?php _e( 'Add price' , 'zay-slider' ); ?></button>
-                                        </div>
-                        </div>
                         <div class="form-group creator-name-form" >
-                                        <label><?php _e('Name','zay-slider'); ?></label>
-                                        <div class="edit-creator-name">
+                                        <label><?php _e('Name','zay-slider'); ?> :</label>
+                                        <!-- <div class="edit-creator-name"> -->
                                             <div class="item-creator-name hideCreator">
                                                 <input id="zay_slider_item_creator_name" name='zay_slider_item_creator_name' class="creatorName" placeholder="<?php _e('Name', 'zay-slider'); ?>" >
+                                                <button id="show" class="visibility-btn show-name">
+                                                    <span class="dashicons dashicons-visibility"></span>
+                                                </button>
+                                                <button style="display: none;" id="hide" class="visibility-btn hide-name">
+                                                    <span class="dashicons dashicons-hidden"></span>
+                                                </button>
                                                 <button type="button" class="rmvCreatorName">&times;</button>
                                             </div>
                                             <button  class="add-creator-name button button-default" ><?php _e( 'Add Name' , 'zay-slider' ); ?></button>
-                                        </div>
+                                        <!-- </div> -->
+                        </div>
+                        <div class="form-group price-form" >
+                                        <label><?php _e('Price','zay-slider'); ?> :</label>
+                                        <!-- <div class="edit-price"> -->
+                                            <div class="item-price hidePrice">
+                                                <!-- <div class="inputs"> -->
+                                                    <input id="zay_slider_item_price" name='zay_slider_item_price' class="priceAmount" placeholder="<?php _e('Price', 'zay-slider'); ?>"  >
+                                                    <input id="zay_slider_item_price_name" name="zay_slider_item_price_name" class="priceName" placeholder="<?php _e('Title', 'zay-slider'); ?>"  >
+                                                    <button id="show" class="visibility-btn show-price">
+                                                        <span class="dashicons dashicons-visibility"></span>
+                                                    </button>
+                                                    <button style="display: none;" id="hide" class="visibility-btn hide-price" />
+                                                        <span class="dashicons dashicons-hidden"></span>
+                                                    </button>
+                                                    <button type="button" class="rmvPrice">&times;</button>
+                                                <!-- </div> -->
+                                            </div>
+                                            <span id="errorMessage" class="errorMessage hide">You can't have a price name without a price</span>
+                                            <button  class="add-price button button-default" ><?php _e( 'Add price' , 'zay-slider' ); ?></button>
+                                        <!-- </div> -->
+                        </div>
+                        <div class="form-group">
+                            <label for="<?php echo $editor_id ?>"><?php _e('Description', 'zay-slider'); ?> :</label>
+
+                            <?php wp_editor($content, $editor_id, $settings); ?>
                         </div>
                     </div>
-
-                </div>
-                <div class="row" id="accordion_design">
                 </div>
                 <div id="accordion"> 
                     <h3>
@@ -222,12 +249,7 @@
                                     <?php _e("Hide Title", 'zay-slider') ?>
                                 </td>
                                 <td>
-                                    <button id="show" class="visibility-btn show-title">
-                                        <span class="dashicons dashicons-visibility"></span>
-                                    </button>
-                                    <button style="display: none;" id="hide" class="visibility-btn hide-title">
-                                        <span class="dashicons dashicons-hidden"></span>
-                                    </button>
+                                    
                                 </td>
                             </tr>
                             <tr>
@@ -290,9 +312,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="reset" class="button button-primary cancel-btn"><?php _e( 'Cancel' , 'zay-slider' ); ?></button>
-                <button type="submit" class="button button-primary save-btn"><?php _e( 'Save' , 'zay-slider' ); ?></button>
-                <button type="submit" data-nonce="<?php echo wp_create_nonce('edit_item_nonce'); ?>" class="button button-primary edit-btn" style="display: none"><?php _e( 'Edit' , 'zay-slider' ); ?></button>
+                <button type="reset" class="cancel-btn"><?php _e( 'Cancel' , 'zay-slider' ); ?></button>
+                <button type="submit" class="save-btn"><?php _e( 'Save' , 'zay-slider' ); ?></button>
+                <button style="display: none;" type="submit" data-nonce="<?php echo wp_create_nonce('edit_item_nonce'); ?>" class="edit-btn" ><?php _e( 'Edit' , 'zay-slider' ); ?></button>
             </div>
 
         </div>
