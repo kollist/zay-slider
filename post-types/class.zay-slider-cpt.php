@@ -10,6 +10,7 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
             add_action( 'add_meta_boxes', array($this, 'add_meta_boxes'));
             add_action( 'save_post', array( $this, 'save_post' ));
             add_action('wp_ajax_submit_cpt', array($this, 'submit_cpt'));
+            add_action("wp_ajax_get_post_by_id", array($this, 'get_post_by_id'));
             add_filter('manage_zay-slider-item_posts_columns', array($this, 'zay_slider_cpt_items_columns'));
             add_filter('manage_zay-slider-menu_posts_columns', array($this, 'zay_slider_cpt_menu_columns'));
             add_action('manage_zay-slider-item_posts_custom_column', array($this, 'zay_slider_custom_items_columns'), 10, 2);
@@ -19,6 +20,40 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
             add_action('wp_ajax_edit_item_post', array($this, 'edit_item_post'));
             add_action('before_delete_post', array($this, 'before_delete_handler'), 10, 2);
             add_filter( 'post_row_actions', array($this, 'modify_menu_row_actions'), 10, 2 );
+        }
+        
+        public function get_post_by_id(){
+            if (isset($_POST["security"]) ){
+                if ( !wp_verify_nonce( $_POST['security'], 'zay_post_nonce' )){
+                    return wp_send_json_error(array( "message" => "The Nonce is not from wordpress"));
+                }
+            }
+            if (!isset($_POST["id"])){
+                return wp_send_json_error(array( "message" => "item ID is required"));
+            }
+
+            $id = sanitize_key($_POST["id"]);
+
+
+            $post = get_post($id);
+            $post->_hide_title = get_post_meta($id, "_hide_title", true);
+            $post->_hide_image = get_post_meta($id, "_hide_image", true);
+            $post->_hide_price = get_post_meta($id, "_hide_price", true);
+            $post->_hide_name = get_post_meta($id, "_hide_name", true);
+            $post->_title_style = get_post_meta($id, "_title_style", true);
+            $post->_author_style = get_post_meta($id, "_author_style", true);
+            $post->_price_style = get_post_meta($id, "_price_style", true);
+            $post->_image_style = get_post_meta($id, "_image_style", true);
+            $post->_description_style = get_post_meta($id, "_description_style", true);
+            $post->_slide_custom_classes = get_post_meta($id, "_slide_custom_classes", true);
+            $post->_slide_custom_id = get_post_meta($id, "_slide_custom_id", true);
+            $post->thumbnail = get_the_post_thumbnail_url($post);
+            $post->price = get_post_meta($id, "zay_slider_item_price", true);
+            $post->price_title = get_post_meta($id, "zay_slider_item_price_name", true);
+            $post->creator_name = get_post_meta($id, "zay_slider_item_creator_name", true);
+
+            return wp_send_json_success($post);
+
         }
 
         public function modify_menu_row_actions( $actions, $post ) {
@@ -440,7 +475,7 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
             if (isset($_POST['itemEditedSecurity'])){
                 if ( !wp_verify_nonce($_POST['itemEditedSecurity'], 'edit_item_nonce')){
                     wp_send_json_error(array(
-                        'message' => __('Something Wrong Happened', 'zay-slider'),
+                        'message' => __('Something Wrong Happened 1', 'zay-slider'),
                     ));
                     wp_die();
                 }
@@ -448,7 +483,7 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
             $post_data = array(
                 'ID' => intval(sanitize_text_field($_POST['itemEditedID'])),
                 'post_title' => sanitize_text_field($_POST['itemEditedTitle']),
-                'post_content' => $_POST['itemEditedContent'],
+                'post_content' => sanitize_text_field( $_POST['itemEditedContent']),
                 'post_type' => sanitize_text_field($_POST['itemEditedPosttype']),
                 'post_status' => 'publish'
             );
@@ -456,7 +491,7 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
 
             if (!$postID){
                 wp_send_json_error(array(
-                    'message' =>  __('Something Wrong Happened', 'zay-slider'),
+                    'message' =>  __('Something Wrong Happened 2', 'zay-slider')
                 ));
             }
 
@@ -470,10 +505,10 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                 update_post_meta($postID, 'zay_slider_item_parent', sanitize_text_field($_POST['itemEditedParent_ID']));
                 update_post_meta($postID, 'zay_slider_item_creator_name', sanitize_text_field($_POST["itemEditedCreatorName"]));
             }
-            $hide_title = isset($_POST["itemEditedHideTitle"]) ? $_POST["itemEditedHideTitle"] : false;
-            $hide_image = isset($_POST["itemEditedHideImage"]) ? $_POST["itemEditedHideImage"] : false;
-            $hide_name = isset($_POST["itemEditedHideName"]) ? $_POST["itemEditedHideImage"] : false;
-            $hide_price = isset($_POST["itemEditedHidePrice"]) ? $_POST["itemEditedHideImage"] : false;
+            $hide_title = $_POST["itemEditedHideTitle"];
+            $hide_image = $_POST["itemEditedHideImage"];
+            $hide_name = $_POST["itemEditedHideName"];
+            $hide_price = $_POST["itemEditedHidePrice"];
 
             $_title_style = $_POST["_title_style"];
             $_author_style = $_POST["_author_style"];
@@ -498,6 +533,12 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
 
             wp_send_json_success(array(
                 'message' => __('Post Have Been Updated Succefully', 'zay-slider'),
+                'data' => array(
+                    "hide_title" => $hide_title,
+                    "hide_image" => $hide_image,
+                    "hide_price" => $hide_price,
+                    "hide_name" => $hide_name
+                ),
             ));
 
 

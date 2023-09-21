@@ -1,7 +1,7 @@
 const carousel = document.querySelector("#carousel"),
 firstItem = carousel.querySelectorAll(".item-card")[0],
 allItems = carousel.querySelectorAll('.item-card'),
-arrowIcons = document.querySelectorAll(".items-wrapper span"),
+arrowIcons = document.querySelectorAll(".items-wrapper .dashicons"),
 shortcodeContainer = document.querySelector("#menu-shortcode"),
 bulletsContainer = document.querySelector(".items-wrapper .bullets");
 

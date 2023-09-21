@@ -4,7 +4,7 @@ if (!function_exists('send_data_to_jquery')):
 function send_data_to_jquery_admin() {
 
 wp_enqueue_script('zay-slider-jq', ZAY_SLIDER_URL . 'assets/js/zay-slider-custom-post-type.js' /*, array("wp-color-picker") */ );
-    wp_localize_script('zay-slider-jq', 'ZAY_FRONT', array('ajaxurl' => admin_url('admin-ajax.php')));
+    wp_localize_script('zay-slider-jq', 'ZAY_FRONT', array('ajaxurl' => admin_url('admin-ajax.php'), 'zaypostnonce' => wp_create_nonce("zay_post_nonce")));
 }
 endif;
 
