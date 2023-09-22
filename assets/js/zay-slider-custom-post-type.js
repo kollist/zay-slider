@@ -194,8 +194,8 @@ jQuery(document).ready(function ($) {
         editedData.append("itemEditedThumbnail", $('.thumb').attr('src'));
         editedData.append("itemEditedSecurity", $('.edit-btn').data('nonce'));
         editedData.append("itemEditedParent_ID", $('#post_ID').val());
-        editedData.append("itemEditedPriceAmount", $('.item-price').attr('.hidePrice') ? '' : $('.priceAmount').val());
-        editedData.append("itemEditedPriceName", $('.item-price').attr('.hidePrice') ? '' : $('.priceName').val());
+        editedData.append("itemEditedPriceAmount", $('.item-price').css('display') == "none" ? '' : $('.priceAmount').val());
+        editedData.append("itemEditedPriceName", $('.item-price').css('display') == "none" ? '' : $('.priceName').val());
         editedData.append("itemEditedCreatorName", $('.item-creator-name').attr('.hideCreator') ? '' : $('#zay_slider_item_creator_name').val());
         editedData.append("action", 'edit_item_post');
         editedData.append("itemEditedHideTitle", $(".hide-title#hide").css("display") == 'block' && "1")

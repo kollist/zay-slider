@@ -59,7 +59,7 @@
                             $custom_classes = get_post_meta(get_the_ID(), "_slide_custom_classes", true);
                             $custom_id = get_post_meta(get_the_ID(), "_slide_custom_id", true);
                             ?>
-                            <div data-id="item_<?php the_ID(); ?>" id="<?php echo $custom_id  ?>" draggable="false" class="item-card swiper-slide <?php echo $custom_classes ?>">
+                            <div data-id="item_<?php the_ID(); ?>" id="<?php echo $custom_id  ?>" draggable="false" class="item-card swiper-slide <?php echo $custom_classes ?> <?php echo get_the_ID() == 93 ? "background-image-card-layout" : "item-card" ?>">
                                 <div class="item-card-img" style="display: <?php echo $hide_image == "1" ? "none" : "" ?>;<?php echo $custom_image_css ?>" >
                                     <?php 
                                         if (! has_post_thumbnail() ) {

@@ -55,14 +55,6 @@
 .carousel.dragging .item-card{
   pointer-events: none;
 }
-.carousel .item-card{
-  height: 100%;
-  -webkit-user-select: none;
-  user-select: none;
-  flex-grow: 0;
-  flex-shrink: 0;
-  position: relative;
-}
 
 .items-wrapper .pagination {
   width: 340px;

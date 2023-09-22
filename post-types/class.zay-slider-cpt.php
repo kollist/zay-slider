@@ -499,7 +499,7 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                 $new_thumbnail_id = attachment_url_to_postid($_POST['itemEditedThumbnail']);
                 update_post_meta(intval(sanitize_text_field($_POST['itemEditedID'])), '_thumbnail_id', $new_thumbnail_id);
             }
-            if ($_POST['itemEditedPriceAmount'] && $_POST['itemEditedPriceName']){
+            if (isset($_POST['itemEditedPriceAmount']) && isset($_POST['itemEditedPriceName'])){
                 update_post_meta($postID, 'zay_slider_item_price', sanitize_text_field($_POST['itemEditedPriceAmount']) );
                 update_post_meta($postID, 'zay_slider_item_price_name', sanitize_text_field($_POST['itemEditedPriceName']));
                 update_post_meta($postID, 'zay_slider_item_parent', sanitize_text_field($_POST['itemEditedParent_ID']));

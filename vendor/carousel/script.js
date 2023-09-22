@@ -14,13 +14,7 @@ let id = shortcodeContainer.dataset.id;
 let itemsOnSlide = parseInt(SLIDER_OPTIONS.slidesToShow[id]);
 let showBullets = SLIDER_OPTIONS.showBullets[id];
 
-// if (itemsOnSlide > 4){
-//     document.querySelector('.items-wrapper').style.width = "100%";
-//     document.querySelector('.items-wrapper').style.marginLeft = 0;
-// }else {
-//     document.querySelector('.items-wrapper').style.width = "70%";
-//     document.querySelector('.items-wrapper').style.marginLeft = "15%";
-// }
+
 
 
 console.log(showBullets)

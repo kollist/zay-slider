@@ -137,6 +137,9 @@
                         <li class="nav-tab">
                             <a href="#custom_attributes"> Custom Attributes <span class="dashicons dashicons-admin-tools"></span> </a>
                         </li>
+                        <li class="nav-tab">
+                            <a href="#custom_styles"> Custom Styles <span class="dashicons dashicons-art"></span> </a>
+                        </li>
                     </ul>
                 </div> 
                 <div class="row" id="new_item">
@@ -175,7 +178,7 @@
                         <div class="form-group creator-name-form" >
                             <label for="zay_slider_item_creator_name"><?php _e('Name','zay-slider'); ?> </label>
                             <div class="edit-creator-name">
-                            <div class="item-creator-name hideCreator">
+                            <div class="item-creator-name ">
                                     <input id="zay_slider_item_creator_name" name='zay_slider_item_creator_name' class="creatorName" placeholder="<?php _e('Name', 'zay-slider'); ?>" >
                                     <button id="show" class="visibility-btn show-name">
                                         <span class="dashicons dashicons-visibility"></span>
@@ -191,7 +194,7 @@
                         <div class="form-group price-form" >
                             <label for="zay_slider_item_price"><?php _e('Price','zay-slider'); ?> </label>
                             <div class="edit-item-price">
-                                <div class="item-price hidePrice">
+                                <div class="item-price">
                                     <div class="price-input">
                                         <input id="zay_slider_item_price" name='zay_slider_item_price' class="priceAmount" placeholder="<?php _e('Price', 'zay-slider'); ?>"  >
                                     </div>
@@ -253,6 +256,24 @@
                     <div class="custom-id">
                         <label for="custom_id"> <?php _e("Custom ID", 'zay-slider') ?> </label>
                         <input type="text" name="custom_id" id="custom_id" />
+                    </div>
+                </div>
+                <div class="row" id="custom_styles">
+                    <div class="inputGroup">
+                        <input checked id="radio1" name="radio" type="radio"/>
+                        <label for="radio1">Default Slide Layout</label>
+                    </div>
+                    <div class="inputGroup">
+                        <input id="radio2" name="radio" type="radio"/>
+                        <label for="radio2">Image As Background Layout</label>
+                    </div>
+                    <div class="inputGroup">
+                        <input id="radio3" name="radio" type="radio"/>
+                        <label for="radio3">Comment Layout</label>
+                    </div>
+                    <div class="inputGroup">
+                        <input id="radio4" name="radio" type="radio"/>
+                        <label for="radio4">Menu Card Layout</label>
                     </div>
                 </div>
             </div>
