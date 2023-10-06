@@ -17,8 +17,6 @@ let showBullets = SLIDER_OPTIONS.showBullets[id];
 
 
 
-console.log(showBullets)
-
 if (showBullets){
     var activeBulletIndex = 0;
     
@@ -67,13 +65,15 @@ arrowIcons.forEach(icon => {
         carousel.scrollLeft += icon.id == "left" ? -firstItemWidth : firstItemWidth;
         
         // Update the active bullet index
-        let bullets = document.querySelector(".items-wrapper .bullets");
-        if (bullets){
-            const nextActiveBulletIndex = Math.floor(carousel.scrollLeft / firstItemWidth);
-            if (nextActiveBulletIndex !== activeBulletIndex) {
-                bullets.children[activeBulletIndex].classList.remove('active');
-                bullets.children[nextActiveBulletIndex].classList.add('active');
-                activeBulletIndex = nextActiveBulletIndex;
+        if(showBullets){
+            let bullets = document.querySelector(".items-wrapper .bullets");
+            if (bullets){
+                const nextActiveBulletIndex = Math.floor(carousel.scrollLeft / firstItemWidth);
+                if (nextActiveBulletIndex !== activeBulletIndex) {
+                    bullets.children[activeBulletIndex].classList.remove('active');
+                    bullets.children[nextActiveBulletIndex].classList.add('active');
+                    activeBulletIndex = nextActiveBulletIndex;
+                }
             }
         }
         showHideIcons();
@@ -87,13 +87,15 @@ const autoSlide = () => {
     let firstItemWidth = firstItem.clientWidth + 5;
     let valDifference = firstItemWidth - positionDiff;
 
-    let bullets = document.querySelector(".items-wrapper .bullets");
-    if (bullets){
-        const nextActiveBulletIndex = Math.floor(carousel.scrollLeft / firstItemWidth);
-        if (nextActiveBulletIndex !== activeBulletIndex) {
-            bullets.children[activeBulletIndex].classList.remove('active');
-            bullets.children[nextActiveBulletIndex].classList.add('active');
-            activeBulletIndex = nextActiveBulletIndex;
+    if (showBullets){
+        let bullets = document.querySelector(".items-wrapper .bullets");
+        if (bullets){
+            const nextActiveBulletIndex = Math.floor(carousel.scrollLeft / firstItemWidth);
+            if (nextActiveBulletIndex !== activeBulletIndex) {
+                bullets.children[activeBulletIndex].classList.remove('active');
+                bullets.children[nextActiveBulletIndex].classList.add('active');
+                activeBulletIndex = nextActiveBulletIndex;
+            }
         }
     }
 

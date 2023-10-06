@@ -47,10 +47,11 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
             $post->_description_style = get_post_meta($id, "_description_style", true);
             $post->_slide_custom_classes = get_post_meta($id, "_slide_custom_classes", true);
             $post->_slide_custom_id = get_post_meta($id, "_slide_custom_id", true);
-            $post->thumbnail = get_the_post_thumbnail_url($post);
+            $post->thumbnail = get_the_post_thumbnail_url($post) ? get_the_post_thumbnail_url($post) : wp_get_attachment_image_url(get_option('zayslider_default_image'));
             $post->price = get_post_meta($id, "zay_slider_item_price", true);
             $post->price_title = get_post_meta($id, "zay_slider_item_price_name", true);
             $post->creator_name = get_post_meta($id, "zay_slider_item_creator_name", true);
+            $post->card_layout = get_post_meta($id, "_card_layout", true);
 
             return wp_send_json_success($post);
 
@@ -234,7 +235,54 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                 'normal',
                 'high'
             );
+            add_meta_box(
+                'zay_slider_custom_layouts',
+                esc_html("Custom Card Layouts", "zay-slider"),
+                array($this, "custom_layouts"),
+                'zay-slider-item',
+                'normal'
+            );
         }
+        public function custom_layouts($post){
+            $custom_layouts = get_post_meta($post->ID, "_card_layout", true);
+            ?>
+            <table class="custom-layouts">
+                <tr>
+                    <td>
+                        <label for="default">Default Layout</label>
+                    </td>
+                    <td>
+                        <input value="default" <?php checked("default", $custom_layouts, true) ?> type="radio" name="layout" id="default">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="background_image">Image As Background Layout</label>
+                    </td>
+                    <td>
+                        <input value="background-image-card-layout" <?php checked("background-image-card-layout", $custom_layouts, true) ?> id="background_image" name="layout" type="radio"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="comment_layout">Comment Card Layout</label>
+                    </td>
+                    <td>
+                        <input value="comment-card-layout" <?php checked("comment-card-layout", $custom_layouts, true) ?> id="comment_layout" name="layout" type="radio"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="menu_card">Menu Card Layout</label>
+                    </td>
+                    <td>
+                        <input value="menu-card-layout" <?php checked("menu-card-layout", $custom_layouts, true) ?> id="menu_card" name="layout" type="radio"/>
+                    </td>
+                </tr>
+            </table>
+            <?php
+        } 
+
         public function item_css_attributes($post) { 
             $custom_classes = get_post_meta($post->ID, "_slide_custom_classes", true);
             $custom_id = get_post_meta($post->ID, "_slide_custom_id", true);
@@ -404,8 +452,8 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                 $old_slides_number = get_post_meta($post_id, '_slides_number', true);
                 $show_bullets_new = $_POST['_show_bullets'];
                 $show_bullets_old = get_post_meta($post_id, '_show_bullets', true);
-                update_post_meta($post_id, '_slides_number', $new_slides_number, $old_slides_number);
-                update_post_meta($post_id, '_show_bullets', $show_bullets_new, $show_bullets_old);
+                update_post_meta($post_id, '_slides_number', sanitize_key($new_slides_number), $old_slides_number);
+                update_post_meta($post_id, '_show_bullets', sanitize_key($show_bullets_new), $show_bullets_old);
             }
             if ( isset($_POST['post_type']) && $_POST['post_type'] === 'zay-slider-item'){
 
@@ -425,13 +473,13 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                     $hide_price_old = get_post_meta($post_id, "_hide_price", true);
                     $hide_name_old = get_post_meta($post_id, "_hide_name", true);
 
-                    $hide_title = $_POST[ "_hide_title"];
-                    $hide_image = $_POST["_hide_image"  ];
-                    $hide_name = $_POST["_hide_name"];
-                    $hide_price = $_POST["_hide_price"];
+                    $hide_title = wp_kses($_POST[ "_hide_title"]);
+                    $hide_image = wp_kses($_POST["_hide_image"  ]);
+                    $hide_name = wp_kses($_POST["_hide_name"]);
+                    $hide_price = wp_kses($_POST["_hide_price"]);
 
-                    $slide_custom_classes = $_POST["_slide_custom_classes"];
-                    $slide_custom_id = $_POST["_slide_custom_id"];
+                    $slide_custom_classes = sanitize_html_class($_POST["_slide_custom_classes"]);
+                    $slide_custom_id = sanitize_html_class($_POST["_slide_custom_id"]);
 
                     $old_custom_classes = get_post_meta($post_id, "_slide_custom_classes", true);
                     $old_custom_id = get_post_meta($post_id, "_slide_custom_id", true);
@@ -441,6 +489,11 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                     $custom_price_css = $_POST["_price_style"];
                     $custom_image_css = $_POST["_image_style"];
                     $custom_description_css = $_POST["_description_style"];
+                    
+                    $card_layout = sanitize_key($_POST["layout"]);
+                    $old_card_layout = get_post_meta($post_id, "_card_layout", true);
+
+                    update_post_meta($post_id, "_card_layout", $card_layout, $old_card_layout);
 
                     $old_custom_title_css = get_post_meta($post_id, "_title_style", true);
                     $old_custom_name_css = get_post_meta($post_id, "_author_style", true);
@@ -448,8 +501,10 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                     $old_custom_image_css = get_post_meta($post_id, "_image_style", true);
                     $old_custom_description_css = get_post_meta($post_id, "_description_style", true);
 
-                    update_post_meta($post_id, "_slide_custom_classes", sanitize_text_field($slide_custom_classes), $old_custom_classes);
-                    update_post_meta($post_id, "_slide_custom_id", sanitize_text_field($slide_custom_id), $old_custom_id);
+                    
+
+                    update_post_meta($post_id, "_slide_custom_classes", $slide_custom_classes, $old_custom_classes);
+                    update_post_meta($post_id, "_slide_custom_id", $slide_custom_id, $old_custom_id);
 
                     update_post_meta($post_id, "_title_style", wp_kses_post($custom_title_css), $old_custom_title_css);
                     update_post_meta($post_id, "_author_style", wp_kses_post($custom_name_css), $old_custom_name_css);
@@ -481,7 +536,7 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                 }
             }
             $post_data = array(
-                'ID' => intval(sanitize_text_field($_POST['itemEditedID'])),
+                'ID' => intval(sanitize_key($_POST['itemEditedID'])),
                 'post_title' => sanitize_text_field($_POST['itemEditedTitle']),
                 'post_content' => sanitize_text_field( $_POST['itemEditedContent']),
                 'post_type' => sanitize_text_field($_POST['itemEditedPosttype']),
@@ -496,7 +551,7 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
             }
 
             if ($_POST['itemEditedThumbnail']){
-                $new_thumbnail_id = attachment_url_to_postid($_POST['itemEditedThumbnail']);
+                $new_thumbnail_id = attachment_url_to_postid(esc_url($_POST['itemEditedThumbnail']));
                 update_post_meta(intval(sanitize_text_field($_POST['itemEditedID'])), '_thumbnail_id', $new_thumbnail_id);
             }
             if (isset($_POST['itemEditedPriceAmount']) && isset($_POST['itemEditedPriceName'])){
@@ -505,18 +560,23 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                 update_post_meta($postID, 'zay_slider_item_parent', sanitize_text_field($_POST['itemEditedParent_ID']));
                 update_post_meta($postID, 'zay_slider_item_creator_name', sanitize_text_field($_POST["itemEditedCreatorName"]));
             }
-            $hide_title = $_POST["itemEditedHideTitle"];
-            $hide_image = $_POST["itemEditedHideImage"];
-            $hide_name = $_POST["itemEditedHideName"];
-            $hide_price = $_POST["itemEditedHidePrice"];
+            $hide_title = sanitize_key($_POST["itemEditedHideTitle"]);
+            $hide_image = sanitize_key($_POST["itemEditedHideImage"]);
+            $hide_name = sanitize_key($_POST["itemEditedHideName"]);
+            $hide_price = sanitize_key($_POST["itemEditedHidePrice"]);
 
             $_title_style = $_POST["_title_style"];
             $_author_style = $_POST["_author_style"];
             $_price_style = $_POST["_price_style"];
             $_image_style = $_POST["_image_style"];
             $_description_style = $_POST["_description_style"];
-            $custom_class = $_POST["_slide_custom_classes"];
-            $custom_id = $_POST["_slide_custom_id"];
+            $custom_class = sanitize_html_class($_POST["_slide_custom_classes"]);
+            $custom_id = sanitize_html_class($_POST["_slide_custom_id"]);
+
+            $_card_layout = sanitize_key($_POST["_card_layout"]);
+            $_old_card_layout = get_post_meta($postID, "_card_layout", true);
+
+            update_post_meta($postID, "_card_layout", $_card_layout, $_old_card_layout);
 
             update_post_meta($postID, "_hide_title", $hide_title);
             update_post_meta($postID, "_hide_image", $hide_image);
@@ -619,6 +679,9 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                 $_old_description_style = get_post_meta($item_id, "_description_style", true);
                 $_old_custom_classes = get_post_meta($item_id, "_slide_custom_classes", true);
                 $_old_custom_id = get_post_meta($item_id, "_slide_custom_id", true);
+                $_card_layout = $_POST["_card_layout"];
+                $_old_card_layout = get_post_meta($item_id, "_card_layout", true);
+                update_post_meta($item_id, "_card_layout", $_card_layout, $_old_card_layout);
                 update_post_meta($item_id, 'zay_slider_item_price', $new_price_amount, $old_price_amount);
                 update_post_meta($item_id, 'zay_slider_item_price_name', $new_price_name, $old_price_name);
                 update_post_meta($item_id, 'zay_slider_item_parent', $new_parent_id, $old_parent_id);

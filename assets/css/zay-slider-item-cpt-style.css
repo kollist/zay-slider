@@ -26,11 +26,13 @@
     font-weight: bold;
 }
 
-table.data-optional-displayer {
+table.data-optional-displayer ,
+table.custom-layouts{
     width: 100%;
     margin-left: 10px;
 }
-table.data-optional-displayer tr {
+table.data-optional-displayer tr,
+table.custom-layouts tr {
     width: 80%;
     display: flex;
     justify-content: space-between;

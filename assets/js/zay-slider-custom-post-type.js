@@ -2,6 +2,34 @@ jQuery(document).ready(function ($) {
 
     $("#tabs").tabs();
 
+
+
+    $(".layout-popup").on("click", function (event){
+        var target = $(event.target);
+        var element = $('.layout-popup img'); 
+
+        if (!target.is(element) && !element.has(target).length) {
+            target.fadeOut();
+        }
+    })
+
+    
+
+    $(".layout-image").click(function (event) {
+        $(event.target).next(".layout-popup").fadeIn();
+    })
+
+
+    
+
+    $('.layout-pop').click(()=>{
+        $(this).dialog("close");
+    })
+    $('.ui-widget-overlay').bind('click', function()
+        { 
+            $("#popup").dialog('close'); 
+    }); 
+
     $("button.visibility-btn").click(function (e) {
         e.preventDefault();
         $(e.target).parent().children("button").each((i, ele) => {
@@ -98,7 +126,22 @@ jQuery(document).ready(function ($) {
                 $("#_description_style").val(res._description_style);
                 $("#custom_class").val(res._slide_custom_classes);
                 $("#custom_id").val(res._slide_custom_id);
-                $('.thumb').attr('src', res.thumbnail)
+                $('.thumb').attr('src', res.thumbnail);
+                if (res.card_layout){
+                    $("#custom_styles .inputGroup").each((i, e) => {
+                        let val = $(e).find("input").val(); 
+                        if (val == res.card_layout){
+                            $(e).find("input").prop("checked", true);
+                        }
+                    });
+                }else {
+                    $("#custom_styles .inputGroup").each((i, e) => {
+                        let val = $(e).find("input").val(); 
+                        if (val == 'default'){
+                            $(e).find("input").prop("checked", true);
+                        }
+                    });
+                }
                 if ($('.thumb').attr('src')) {
                     $('.uploader-upload').hide();
                     $('.uploader-image').show()
@@ -126,20 +169,9 @@ jQuery(document).ready(function ($) {
             }
         })
 
-
-
         $('#changeImg').click(reactOnClick)
 
-
         $(".show-thumb").data("hide");
-        
-
-
-        
-
-        
-
-        
         
     }
 
@@ -186,6 +218,16 @@ jQuery(document).ready(function ($) {
         } else {
             $('.errorMessage').addClass('hide');
         }
+
+        var layout = "";
+        $("#custom_styles .inputGroup").each((i, e) => {
+            if ($(e).find("input").prop("checked")){
+                layout = $(e).find("input").val();
+            };
+        })
+
+        console.log(layout)
+
         let editedData = new FormData();
         editedData.append("itemEditedID", $(".dialog").data("id"))
         editedData.append("itemEditedTitle", $('.item-title').val());
@@ -209,6 +251,7 @@ jQuery(document).ready(function ($) {
         editedData.append("_description_style", $("#_description_style").val());
         editedData.append("_slide_custom_classes", $("#custom_class").val());
         editedData.append("_slide_custom_id", $("#custom_id").val());
+        editedData.append("_card_layout", layout);
         $.ajax({
             url: ZAY_FRONT.ajaxurl,
             action: 'zay-slider-jq',
@@ -285,7 +328,6 @@ jQuery(document).ready(function ($) {
     })
 
     $('.cancelDeleteBtn').click(function (e) {
-
         theDialog.dialog('close')
     })
 
@@ -336,6 +378,7 @@ jQuery(document).ready(function ($) {
     })
     $('.itemBtn').on('click', function (e) {
         e.preventDefault();
+        
         $('.dialogMenuItem').slideDown(
             100,
             function () {
@@ -392,8 +435,6 @@ jQuery(document).ready(function ($) {
         $(".nav-tab-wrapper li").first().addClass("nav-tab-active")
         $(".nav-tab-wrapper li").last().removeClass("nav-tab-active")
 
-        // $("#tabs").tabs("option", "active", "#new_item");
-
         $("#_title_style").val("");
         $("#_author_style").val("");
         $("#_price_style").val("");
@@ -435,6 +476,14 @@ jQuery(document).ready(function ($) {
     }
     $(".save-btn").click(function (e) {
         e.preventDefault();
+
+        var layout = "";
+        $("#custom_styles .inputGroup").each((i, e) => {
+            if ($(e).find("input").prop("checked")){
+                layout = $(e).find("input").val();
+            };
+        })
+
         if (!$('.priceAmount').val() && $('.priceName').val()) {
             $('.errorMessage').removeClass('hide');
             e.preventDefault();
@@ -464,6 +513,7 @@ jQuery(document).ready(function ($) {
         postData.append("_description_style", $("#_description_style").val());
         postData.append("_slide_custom_classes", $("#custom_class").val());
         postData.append("_slide_custom_id", $("#custom_id").val());
+        postData.append("_card_layout", layout);
         $.ajax({
             url: ZAY_FRONT.ajaxurl,
             action: 'zay-slider-jq',
