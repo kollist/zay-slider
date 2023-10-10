@@ -420,14 +420,6 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                         <td><label for="_show_bullets"> <?php _e('Show Bullets', 'zay-slider') ?> </label></td>
                         <td><input type="checkbox" name="_show_bullets" id="_show_bullets" value="yes" <?php checked('yes', $show_bullets, true) ?> ></td>
                     </tr>
-                    <!-- <tr class="bgcolor">
-                        <td>
-                            <label for="bgcolor"> <?php _e("Slider Background Color", 'zay-slider') ?> </label>
-                        </td>
-                        <td>
-                            <input type="text" value="#bada55" class="bgcolor_field" data-default-color="#effeff" >
-                        </td>
-                    </tr> -->
                 </table>
                     <?php
         }
@@ -473,10 +465,10 @@ if ( !class_exists( 'Zay_Slider_Post_Type')) {
                     $hide_price_old = get_post_meta($post_id, "_hide_price", true);
                     $hide_name_old = get_post_meta($post_id, "_hide_name", true);
 
-                    $hide_title = wp_kses($_POST[ "_hide_title"]);
-                    $hide_image = wp_kses($_POST["_hide_image"  ]);
-                    $hide_name = wp_kses($_POST["_hide_name"]);
-                    $hide_price = wp_kses($_POST["_hide_price"]);
+                    $hide_title = $_POST["_hide_title"];
+                    $hide_image = $_POST["_hide_image"  ];
+                    $hide_name = $_POST["_hide_name"];
+                    $hide_price = $_POST["_hide_price"];
 
                     $slide_custom_classes = sanitize_html_class($_POST["_slide_custom_classes"]);
                     $slide_custom_id = sanitize_html_class($_POST["_slide_custom_id"]);

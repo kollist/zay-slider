@@ -263,33 +263,33 @@
                         <input value="default" checked id="radio1" name="layout" type="radio"/>
                         <label for="radio1">Default Slide Layout</label>
                         <img class="layout-image" src="https://lh3.googleusercontent.com/drive-viewer/AITFw-yBugqh80hVuO8aJA6yIaeZeBrCCgjJefFEajBruaIrkR-4JUyW1mpHl4myuNRD202uUwCNWz-bQdFAtoRHhwN0Cvtr=s2560" alt="Layout Image" srcset="">
-                        <div class="layout-popup" style="display: none;">
+                        <!-- <div class="layout-popup" style="display: none;">
                             <img src="https://lh3.googleusercontent.com/drive-viewer/AITFw-yBugqh80hVuO8aJA6yIaeZeBrCCgjJefFEajBruaIrkR-4JUyW1mpHl4myuNRD202uUwCNWz-bQdFAtoRHhwN0Cvtr=s2560" alt="Layout Image" srcset="">
-                        </div>
+                        </div> -->
                     </div>
                     <div class="inputGroup">
                         <input value="background-image-card-layout" id="radio2" name="layout" type="radio"/>
                         <label for="radio2">Image As Background Layout</label>
                         <img class="layout-image" src="https://lh3.googleusercontent.com/drive-viewer/AITFw-wX14IgUzc8Ec2ujcJ8yWbNF6QLfNlX27qk0mEwLulWu8vKkoqIsiY-JCVLcaxAEjU4pOC26H9ZHKZovJyK_lgwcmW6=s2560" alt="Layout Image" srcset="">
-                        <div class="layout-popup" style="display: none;">
+                        <!-- <div class="layout-popup" style="display: none;">
                             <img src="https://lh3.googleusercontent.com/drive-viewer/AITFw-wX14IgUzc8Ec2ujcJ8yWbNF6QLfNlX27qk0mEwLulWu8vKkoqIsiY-JCVLcaxAEjU4pOC26H9ZHKZovJyK_lgwcmW6=s2560" alt="Layout Image" srcset="">
-                        </div>
+                        </div> -->
                     </div>
                     <div class="inputGroup">
                         <input value="comment-card-layout" id="radio3" name="layout" type="radio"/>
                         <label for="radio3">Comment Layout</label>
                         <img class="layout-image" src="https://lh3.googleusercontent.com/drive-viewer/AITFw-zTe8Mevd8p-5BVstxpo65XHpmPmUssWTBIohyBkqJzIliOIwzVmsKK8_mReiDhA9YPgL0BjyEFIKSbMzS0nW2rmubdog=s2560" alt="Layout Image" srcset="">
-                        <div class="layout-popup" style="display: none;">
+                        <!-- <div class="layout-popup" style="display: none;">
                             <img src="https://lh3.googleusercontent.com/drive-viewer/AITFw-zTe8Mevd8p-5BVstxpo65XHpmPmUssWTBIohyBkqJzIliOIwzVmsKK8_mReiDhA9YPgL0BjyEFIKSbMzS0nW2rmubdog=s2560" alt="Layout Image" srcset="">
-                        </div>
+                        </div> -->
                     </div>
                     <div class="inputGroup">
                         <input value="menu-card-layout" id="radio4" name="layout" type="radio"/>
                         <label for="radio4">Menu Card Layout</label>
                         <img class="layout-image" src="https://lh3.googleusercontent.com/drive-viewer/AK7aPaBlanaToAL6eyEEDyi6PhSak_4JCS4Gj05bsYdM3ohAd5jS8sRou1vGQoRMOUcGYtxNMvV_NZhFG0FbxawpJWUJ-qTsvQ=s2560" alt="Layout Image" srcset="">
-                        <div class="layout-popup" style="display: none;">
+                        <!-- <div class="layout-popup" style="display: none;">
                             <img src="https://lh3.googleusercontent.com/drive-viewer/AK7aPaBlanaToAL6eyEEDyi6PhSak_4JCS4Gj05bsYdM3ohAd5jS8sRou1vGQoRMOUcGYtxNMvV_NZhFG0FbxawpJWUJ-qTsvQ=s2560" alt="Layout Image" srcset="">
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
